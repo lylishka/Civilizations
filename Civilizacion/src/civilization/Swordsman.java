@@ -2,9 +2,12 @@ package civilization;
 
 public class Swordsman extends AttackUnity{
 
-	public Swordsman(int armor, int initialArmor, int baseDamage) {
-		super(armor, initialArmor, baseDamage);
-		// TODO Auto-generated constructor stub
+	public Swordsman(int tecDef, int tecAtk) {
+		super(
+				ARMOR_SWORDSMAN + (tecDef * PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY * ARMOR_SWORDSMAN / 100),    // Esto es el armor
+				ARMOR_SWORDSMAN + (tecDef * PLUS_ARMOR_SWORDSMAN_BY_TECHNOLOGY * ARMOR_SWORDSMAN / 100),    // Esto es el initialArmor
+				BASE_DAMAGE_SWORDSMAN + (tecAtk * PLUS_ATTACK_SWORDSMAN_BY_TECHNOLOGY * BASE_DAMAGE_SWORDSMAN / 100) // Esto es el baseDamage
+			);
 	}
 
 	
