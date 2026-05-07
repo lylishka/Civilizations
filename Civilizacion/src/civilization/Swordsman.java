@@ -1,6 +1,6 @@
 package civilization;
 
-public class Swordsman extends AttackUnity{
+public class Swordsman extends AttackUnity {
 
 	public Swordsman(int tecDef, int tecAtk) {
 		super(
@@ -14,51 +14,45 @@ public class Swordsman extends AttackUnity{
 		super(ARMOR_SWORDSMAN, ARMOR_SWORDSMAN, BASE_DAMAGE_SWORDSMAN);
 	}
 
+	public int getFoodCost() {
+		return FOOD_COST_SWORDSMAN;
+	}
+	
+	public int getWoodCost() {
+		return WOOD_COST_SWORDSMAN; 
+	}
+	
+    public int getIronCost() {
+    	return IRON_COST_SWORDSMAN; 
+    }
+    
+    public int getManaCost() { 
+    	return MANA_COST_SWORDSMAN; 
+    }
+    
+    public int getChanceGeneratinWaste() {
+    	return CHANCE_GENERATNG_WASTE_SWORDSMAN; 
+    }
+    
+    public int getChanceAttackAgain() { 
+    	return CHANCE_ATTACK_AGAIN_SWORDSMAN; 
+    }
+
 	public int attack() {
 		return 0;
 	}
-
+	
 	public void takeDamage(int receivedDamage) {
 		
 	}
 
-	
 	public int getActualArmor() {
 		return 0;
 	}
-	
-	public int getFoodCost() {
-		return 0;
-	}
 
-	
-	public int getWoodCost() {
-		return 0;
-	}
-
-	
-	public int getIronCost() {
-		return 0;
-	}
-
-	
-	public int getManaCost() {
-		return 0;
-	}
-
-	
-	public int getChanceGeneratinWaste() {
-		return 0;
-	}
-
-	
-	public int getChanceAttackAgain() {
-		return 0;
-	}
-
-	
 	public void resetArmor() {
-		
+			
 	}
+	
 
 }

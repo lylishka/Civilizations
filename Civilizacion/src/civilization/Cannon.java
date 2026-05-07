@@ -2,47 +2,55 @@ package civilization;
 
 public class Cannon extends AttackUnity{
 
-	public Cannon(int armor, int initialArmor, int baseDamage) {
-		super(armor, initialArmor, baseDamage);
-	}
-	
+	public Cannon(int tecDef, int tecAtk) {
+        super(
+            ARMOR_CANNON + (tecDef * PLUS_ARMOR_CANNON_BY_TECHNOLOGY * ARMOR_CANNON / 100),
+            ARMOR_CANNON + (tecDef * PLUS_ARMOR_CANNON_BY_TECHNOLOGY * ARMOR_CANNON / 100),
+            BASE_DAMAGE_CANNON + (tecAtk * PLUS_ATTACK_CANNON_BY_TECHNOLOGY * BASE_DAMAGE_CANNON / 100)
+        );
+    }
+
+    public Cannon() {
+        super(ARMOR_CANNON, ARMOR_CANNON, BASE_DAMAGE_CANNON);
+    }
+
+    public int getFoodCost() {
+    	return FOOD_COST_CANNON; 
+    }
+    
+    public int getWoodCost() { 
+    	return WOOD_COST_CANNON; 
+    }
+    
+    public int getIronCost() { 
+    	return IRON_COST_CANNON; 
+    }
+    
+    public int getManaCost() { 
+    	return MANA_COST_CANNON; 
+    }
+    
+    public int getChanceGeneratinWaste() { 
+    	return CHANCE_GENERATNG_WASTE_CANNON; 
+    }
+    
+    public int getChanceAttackAgain() {
+    	return CHANCE_ATTACK_AGAIN_CANNON; 
+    }
+
 	public int attack() {
 		return 0;
 	}
-	
+
 	public void takeDamage(int receivedDamage) {
-		
+
 	}
-	
+
 	public int getActualArmor() {
 		return 0;
 	}
-	
-	public int getFoodCost() {
-		return 0;
-	}
-	
-	public int getWoodCost() {
-		return 0;
-	}
-	
-	public int getIronCost() {
-		return 0;
-	}
-	
-	public int getManaCost() {
-		return 0;
-	}
-	
-	public int getChanceGeneratinWaste() {
-		return 0;
-	}
-	
-	public int getChanceAttackAgain() {
-		return 0;
-	}
-	
+
 	public void resetArmor() {
-		
+
 	}
 }

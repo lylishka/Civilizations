@@ -2,47 +2,50 @@ package civilization;
 
 public class Spearman extends AttackUnity{
 
-	public Spearman(int armor, int initialArmor, int baseDamage) {
-		super(armor, initialArmor, baseDamage);
-	}
+	public Spearman(int tecDef, int tecAtk) {
+        super(
+                ARMOR_SPEARMAN + (tecDef * PLUS_ARMOR_SPEARMAN_BY_TECHNOLOGY * ARMOR_SPEARMAN / 100),
+                ARMOR_SPEARMAN + (tecDef * PLUS_ARMOR_SPEARMAN_BY_TECHNOLOGY * ARMOR_SPEARMAN / 100),
+                BASE_DAMAGE_SPEARMAN + (tecAtk * PLUS_ATTACK_SPEARMAN_BY_TECHNOLOGY * BASE_DAMAGE_SPEARMAN / 100)
+            );
+        }
 
-	public int attack() {
-		return 0;
-	}
+        public Spearman() {
+            super(ARMOR_SPEARMAN, ARMOR_SPEARMAN, BASE_DAMAGE_SPEARMAN);
+        }
 
-	public void takeDamage(int receivedDamage) {
-		
-	}
+        public int getFoodCost() {
+        	return FOOD_COST_SPEARMAN;
+        }
+        public int getWoodCost() {
+        	return WOOD_COST_SPEARMAN; 
+        }
+        public int getIronCost() { 
+        	return IRON_COST_SPEARMAN;
+        }
+        public int getManaCost() { 
+        	return MANA_COST_SPEARMAN; 
+        }
+        public int getChanceGeneratinWaste() {
+        	return CHANCE_GENERATNG_WASTE_SPEARMAN; 
+        }
+        public int getChanceAttackAgain() { 
+        	return CHANCE_ATTACK_AGAIN_SPEARMAN; 
+        }
 
-	public int getActualArmor() {
-		return 0;
-	}
-	
-	public int getFoodCost() {
-		return 0;
-	}
-	
-	public int getWoodCost() {
-		return 0;
-	}
+		public int attack() {
+			return 0;
+		}
 
-	public int getIronCost() {
-		return 0;
-	}
+		public void takeDamage(int receivedDamage) {
+			
+		}
 
-	public int getManaCost() {
-		return 0;
-	}
+		public int getActualArmor() {
+			return 0;
+		}
 
-	public int getChanceGeneratinWaste() {
-		return 0;
-	}
-
-	public int getChanceAttackAgain() {
-		return 0;
-	}
-
-	public void resetArmor() {
-		
-	}
+		public void resetArmor() {
+			
+		}
 }
