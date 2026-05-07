@@ -170,17 +170,6 @@ public interface Variables {
 	public final int CHANCE_ATTACK_AGAIN_CROSSBOW = 45;
 	public final int CHANCE_ATTACK_AGAIN_CANNON = 70;
 	
-	/*
-	 * 
-	 * a
-	 * 
-	 * 
-	 */
-	
-	
-	
-	
-	
 	//Defense chance to attack again
 	public final int CHANCE_ATTACK_AGAIN_ARROWTOWER = 5;
 	public final int CHANCE_ATTACK_AGAIN_CATAPULT = 12;

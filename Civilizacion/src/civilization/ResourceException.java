@@ -1,5 +1,5 @@
 package civilization;
 
-public class ResourceException extends Exception{
+public class ResourceException extends Exception {
 
 }
