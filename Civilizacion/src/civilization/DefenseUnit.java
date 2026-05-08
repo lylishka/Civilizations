@@ -16,20 +16,12 @@ public class DefenseUnit implements MilitaryUnit, Variables {
         this.sanctified = false;
 	}
 	
-	public int getArmor() {
-		return armor;
-	}
-	
 	public void setArmor(int armor) {
 		this.armor = armor;
 	}
 	
 	public int getInitialArmor() {
 		return initialArmor;
-	}
-	
-	public void setInitialArmor(int initialArmor) {
-		this.initialArmor = initialArmor;
 	}
 	
 	public int getBaseDamage() {
@@ -57,42 +49,42 @@ public class DefenseUnit implements MilitaryUnit, Variables {
 	}
 	 
 	public int attack() {
-		return 0;
+		return baseDamage;
 	}
 	 
 	public void takeDamage(int receivedDamage) {
-		
+		this.setArmor(this.getActualArmor() - receivedDamage);
 	}
 	 
 	public int getActualArmor() {
-		return 0;
+		return this.armor;
 	}
 	 
 	public int getFoodCost() {
-		return 0;
+		return this.getFoodCost();
 	}
 	 
 	public int getWoodCost() {
-		return 0;
+		return this.getWoodCost();
 	}
 	 
 	public int getIronCost() {
-		return 0;
+		return this.getIronCost();
 	}
 	 
 	public int getManaCost() {
-		return 0;
+		return this.getManaCost();
 	}
 	 
 	public int getChanceGeneratinWaste() {
-		return 0;
+		return this.getChanceGeneratinWaste();
 	}
 	 
 	public int getChanceAttackAgain() {
-		return 0;
+		return this.getChanceAttackAgain();
 	}
 	 
 	public void resetArmor() {
-		
+		this.setArmor(this.getInitialArmor());
 	}
 }

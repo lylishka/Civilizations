@@ -38,8 +38,16 @@ public class Swordsman extends AttackUnity {
     	return CHANCE_ATTACK_AGAIN_SWORDSMAN; 
     }
 
-	public int attack() {		
-		return 0;
+	public int attack() {
+		int daño = this.getBaseDamage();
+		
+		daño += (this.getBaseDamage() * this.getExperience() / 100);
+		
+		if (this.isSanctified()) {
+			daño += (this.getBaseDamage() * PLUS_ATTACK_UNIT_SANCTIFIED / 100);
+		}
+		
+		return daño;
 	}
 	
 	public void takeDamage(int receivedDamage) {

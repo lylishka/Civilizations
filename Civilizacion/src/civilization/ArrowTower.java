@@ -10,10 +10,10 @@ public class ArrowTower extends DefenseUnit implements MilitaryUnit {
 	}
 	
 	public void takeDamage(int damage) {
-		this.setArmor(this.getArmor() - damage);
+		this.setArmor(this.getActualArmor() - damage);
 	}
 	
 	public int getActualArmor() {
-		return this.getArmor();
+		return this.getActualArmor();
 	}
 }

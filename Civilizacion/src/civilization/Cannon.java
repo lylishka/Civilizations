@@ -1,6 +1,6 @@
 package civilization;
 
-public class Cannon extends AttackUnity{
+public class Cannon extends AttackUnity {
 
 	public Cannon(int tecDef, int tecAtk) {
         super(
@@ -39,7 +39,15 @@ public class Cannon extends AttackUnity{
     }
 
 	public int attack() {
-		return 0;
+		int daño = this.getBaseDamage();
+		
+		daño += (this.getBaseDamage() * this.getExperience() / 100);
+		
+		if (this.isSanctified()) {
+			daño += (this.getBaseDamage() * PLUS_ATTACK_UNIT_SANCTIFIED / 100);
+		}
+		
+		return daño;
 	}
 
 	public void takeDamage(int receivedDamage) {

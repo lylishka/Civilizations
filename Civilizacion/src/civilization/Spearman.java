@@ -1,6 +1,6 @@
 package civilization;
 
-public class Spearman extends AttackUnity{
+public class Spearman extends AttackUnity {
 
 	public Spearman(int tecDef, int tecAtk) {
         super(
@@ -33,9 +33,17 @@ public class Spearman extends AttackUnity{
         	return CHANCE_ATTACK_AGAIN_SPEARMAN; 
         }
 
-		public int attack() {
-			return 0;
-		}
+    	public int attack() {
+    		int daño = this.getBaseDamage();
+    		
+    		daño += (this.getBaseDamage() * this.getExperience() / 100);
+    		
+    		if (this.isSanctified()) {
+    			daño += (this.getBaseDamage() * PLUS_ATTACK_UNIT_SANCTIFIED / 100);
+    		}
+    		
+    		return daño;
+    	}
 
 		public void takeDamage(int receivedDamage) {
 			this.setArmor(this.getArmor() - receivedDamage);
