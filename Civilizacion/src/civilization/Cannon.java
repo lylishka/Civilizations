@@ -1,6 +1,6 @@
 package civilization;
 
-public class Cannon extends AttackUnity{
+public class Cannon extends AttackUnity {
 
 	public Cannon(int tecDef, int tecAtk) {
         super(

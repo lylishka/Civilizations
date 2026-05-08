@@ -49,7 +49,7 @@ public class DefenseUnit implements MilitaryUnit, Variables {
 	}
 	 
 	public int attack() {
-		return 0;
+		return baseDamage;
 	}
 	 
 	public void takeDamage(int receivedDamage) {
@@ -57,7 +57,7 @@ public class DefenseUnit implements MilitaryUnit, Variables {
 	}
 	 
 	public int getActualArmor() {
-		return this.getActualArmor();
+		return this.armor;
 	}
 	 
 	public int getFoodCost() {

@@ -1,6 +1,6 @@
 package civilization;
 
-public class Spearman extends AttackUnity{
+public class Spearman extends AttackUnity {
 
 	public Spearman(int tecDef, int tecAtk) {
         super(
