@@ -1,11 +1,11 @@
 package civilization;
 
 public class SpecialUnit implements MilitaryUnit, Variables {
-	private int armor;
-    private int initialArmor;
-    private int baseDamage;
-    private int experience;
-    private boolean sanctified;
+	protected int armor;
+	protected int initialArmor;
+	protected int baseDamage;
+	protected int experience;
+	protected boolean sanctified;
     
 	public SpecialUnit(int armor, int initialArmor, int baseDamage) {
 		super();

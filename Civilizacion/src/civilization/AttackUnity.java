@@ -1,11 +1,11 @@
 package civilization;
 
 public abstract class AttackUnity implements MilitaryUnit, Variables {
-	private int armor;
-	private int initialArmor;
-	private int baseDamage;
-	private int experience;
-	private boolean sanctified;
+	protected int armor;
+	protected int initialArmor;
+	protected int baseDamage;
+	protected int experience;
+	protected boolean sanctified;
 	
 	public AttackUnity(int armor, int initialArmor, int baseDamage) {
 		super();
