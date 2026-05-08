@@ -38,21 +38,19 @@ public class Swordsman extends AttackUnity {
     	return CHANCE_ATTACK_AGAIN_SWORDSMAN; 
     }
 
-	public int attack() {
+	public int attack() {		
 		return 0;
 	}
 	
 	public void takeDamage(int receivedDamage) {
-		
+		this.setArmor(this.getArmor() - receivedDamage);
 	}
 
 	public int getActualArmor() {
-		return 0;
+		return this.getArmor();
 	}
 
 	public void resetArmor() {
-			
+		this.setArmor(this.getInitialArmor());
 	}
-	
-
 }

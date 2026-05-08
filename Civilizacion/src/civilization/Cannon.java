@@ -43,14 +43,14 @@ public class Cannon extends AttackUnity{
 	}
 
 	public void takeDamage(int receivedDamage) {
-
+		this.setArmor(this.getArmor() - receivedDamage);
 	}
 
 	public int getActualArmor() {
-		return 0;
+		return this.getArmor();
 	}
 
 	public void resetArmor() {
-
+		this.setArmor(this.getInitialArmor());
 	}
 }

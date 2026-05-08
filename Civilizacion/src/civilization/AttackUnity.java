@@ -27,9 +27,6 @@ public abstract class AttackUnity implements MilitaryUnit, Variables {
 	public int getInitialArmor() {
 		return initialArmor;
 	}
-	public void setInitialArmor(int initialArmor) {
-		this.initialArmor = initialArmor;
-	}
 	
 	public int getBaseDamage() {
 		return baseDamage;
