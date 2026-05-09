@@ -1,8 +1,8 @@
-package civilization;
+package game;
 
-public class Magician extends SpecialUnit implements MilitaryUnit {
-	public Magician(int armor, int baseDamage) {
-		super(armor, 7, baseDamage);
+public class Priest extends SpecialUnit implements MilitaryUnit {
+	public Priest(int armor, int baseDamage) {
+		super(armor, 8, baseDamage);
 	}
 	
 	public int attack() {
@@ -16,5 +16,4 @@ public class Magician extends SpecialUnit implements MilitaryUnit {
 	public int getActualArmor() {
 		return this.getArmor();
 	}
-	
 }

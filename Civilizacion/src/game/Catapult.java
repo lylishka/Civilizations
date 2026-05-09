@@ -1,8 +1,8 @@
-package civilization;
+package game;
 
-public class RocketLauncherTower extends DefenseUnit implements MilitaryUnit {
-	public RocketLauncherTower(int armor, int baseDamage) {
-		super(armor, 6, baseDamage);
+public class Catapult extends DefenseUnit implements MilitaryUnit {
+	public Catapult(int armor, int baseDamage) {
+		super(armor, 5, baseDamage);
 	}
 	
 	public int attack() {

@@ -1,4 +1,4 @@
-package civilization;
+package game;
 
 public class Spearman extends AttackUnity {
 

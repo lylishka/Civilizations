@@ -1,6 +1,9 @@
-package civilization;
+package game;
 
 import java.util.ArrayList;
+
+import logic.BuildingException;
+import logic.ResourceException;
 
 public class Civilization implements Variables{
 	// Tecnologías y Edificios

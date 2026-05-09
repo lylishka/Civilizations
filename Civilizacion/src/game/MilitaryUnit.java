@@ -1,4 +1,4 @@
-package civilization;
+package game;
 
 public interface MilitaryUnit {
 	abstract int attack();

@@ -1,6 +1,7 @@
-package civilization;
+package logic;
 
 import java.util.ArrayList;
+import game.MilitaryUnit;
 
 public class Battle {
 	// Almacenar Unidades
@@ -61,7 +62,7 @@ public class Battle {
 		this.actualNumberUnitsEnemy = new int[9];
 	}
 
-	public ArrayList<MilitaryUnit> getCivilizationArmy() {
+	public ArrayList<game.MilitaryUnit> getCivilizationArmy() {
 		return civilizationArmy;
 	}
 
@@ -69,7 +70,7 @@ public class Battle {
 			this.civilizationArmy = civilizationArmy;
 		}
 
-		public ArrayList<MilitaryUnit> getEnemyArmy() {
+		public ArrayList<game.MilitaryUnit> getEnemyArmy() {
 			return enemyArmy;
 		}
 

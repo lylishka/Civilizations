@@ -1,4 +1,4 @@
-package civilization;
+package game;
 
 public abstract class AttackUnity implements MilitaryUnit, Variables {
 	protected int armor;
