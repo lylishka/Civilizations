@@ -367,7 +367,7 @@ public class Civilization implements Variables{
 	    int count = 0;
 	    for (int i = 0; i < n; i += 1) {
 	        if (food >= FOOD_COST_MAGICIAN && wood >= WOOD_COST_MAGICIAN && iron >= IRON_COST_MAGICIAN && mana >= MANA_COST_MAGICIAN) {
-	            army[7].add(new Magician(technologyAtack));
+	            army[7].add(new Magician(technologyDefense, technologyAtack));
 	            food -= FOOD_COST_MAGICIAN;
 	            wood -= WOOD_COST_MAGICIAN;
 	            iron -= IRON_COST_MAGICIAN;
@@ -390,7 +390,7 @@ public class Civilization implements Variables{
 	    for (int i = 0; i < n; i += 1) {
 	        // Comprobamos iglesias disponibles Y recursos
 	        if (army[8].size() < church && food >= FOOD_COST_PRIEST && mana >= MANA_COST_PRIEST) {
-	            army[8].add(new Priest());
+	            army[8].add(new Priest(technologyDefense, technologyAtack));
 	            food -= FOOD_COST_PRIEST;
 	            mana -= MANA_COST_PRIEST;
 	            count += 1;
