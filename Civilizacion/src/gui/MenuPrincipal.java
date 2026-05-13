@@ -10,12 +10,12 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class MenuPanel extends JPanel {
-	private JButton botonPlay, botonExit;
+public class MenuPrincipal extends JPanel {
+	private JButton botonNueva, botonContinuar, botonExit;
 	private JPanel menuBotones;
 	private BufferedImage fondo;
 	
-	public MenuPanel(BufferedImage imagen) {
+	public MenuPrincipal(BufferedImage imagen) {
 		this.fondo = imagen;
 		
 		setLayout(new BorderLayout());
@@ -26,13 +26,17 @@ public class MenuPanel extends JPanel {
 			}
 		};
 		
-		botonPlay = new JButton("JUGAR");
-		botonPlay.setPreferredSize(new Dimension(130, 45));
+		botonNueva = new JButton("NUEVA PARTIDA");
+		botonNueva.setPreferredSize(new Dimension(130, 45));
+		
+		botonContinuar = new JButton("CONTINUAR");
+		botonContinuar.setPreferredSize(new Dimension(130, 45));
 		
 		botonExit = new JButton("SALIR");
 		botonExit.setPreferredSize(new Dimension(130, 45));
 		
-		menuBotones.add(botonPlay);
+		menuBotones.add(botonNueva);
+		menuBotones.add(botonContinuar);
 		menuBotones.add(botonExit);
 		
 		add(menuBotones, BorderLayout.SOUTH);
@@ -43,6 +47,10 @@ public class MenuPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+	}
+
+	public JButton getBotonNueva() {
+		return botonNueva;
 	}
 
 	public JButton getBotonExit() {

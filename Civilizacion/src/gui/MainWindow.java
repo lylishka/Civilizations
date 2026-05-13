@@ -13,7 +13,8 @@ import javax.swing.JFrame;
 
 public class MainWindow extends JFrame {
 	private BufferedImage imagenIcono, imagenFondo;
-	private MenuPanel menu;
+	private MenuPrincipal menu;
+	private MenuLogin login;
 	
 	public MainWindow() {
 		setTitle("Civilization");
@@ -46,8 +47,21 @@ public class MainWindow extends JFrame {
 		}
 		
 		
-		menu = new MenuPanel(imagenFondo);
+		menu = new MenuPrincipal(imagenFondo);
+		
 		add(menu);
+		
+		login = new MenuLogin(imagenFondo);
+		
+		
+		menu.getBotonNueva().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				menu.setVisible(false);
+				add(login);
+				repaint();
+			}
+		});
 		
 		menu.getBotonExit().addActionListener(new ActionListener() {
 			

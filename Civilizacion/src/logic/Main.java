@@ -4,7 +4,7 @@ import data.DBConection;
 import gui.MainWindow;
 
 
-public class Main {
+public class Main {	
 
 	public static void main(String[] args) {
 		DBConection data = new DBConection();
