@@ -125,7 +125,7 @@ public class MainWindow extends JFrame {
 		});
 	}
 	
-	public void iniciarGame(String nombreCivilizacion) {
+	private void iniciarGame(String nombreCivilizacion) {
 		setTitle("Civilizations: " + nombreCivilizacion);
 		
 		login.setVisible(false);
@@ -133,6 +133,7 @@ public class MainWindow extends JFrame {
 		game = new Game(nombreCivilizacion);
 		add(game);
 		game.setVisible(true);
+		
 		repaint();
 	}
 }
