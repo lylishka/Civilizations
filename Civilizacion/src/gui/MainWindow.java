@@ -58,7 +58,7 @@ public class MainWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	private void iniciarMenuPrincipal() {
+	public void iniciarMenuPrincipal() {
 		menu = new MenuPrincipal(imagenFondo);
 		add(menu);
 		
@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 		});
 	}
 	
-	private void iniciarMenuLogin() {
+	public void iniciarMenuLogin() {
 		login = new MenuLogin(imagenFondo);
 		
 		login.getBotonVolver().addActionListener(new ActionListener() {
@@ -125,7 +125,7 @@ public class MainWindow extends JFrame {
 		});
 	}
 	
-	private void iniciarGame(String nombreCivilizacion) {
+	public void iniciarGame(String nombreCivilizacion) {
 		setTitle("Civilizations: " + nombreCivilizacion);
 		
 		login.setVisible(false);
