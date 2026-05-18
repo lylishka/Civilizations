@@ -22,11 +22,18 @@ public class Game extends JPanel {
 		
 		JPanel tab2 = new JPanel();
 		tab2.setBackground(Color.LIGHT_GRAY);
-		tab2.add(new JLabel("ESTRUCTURAS"));
+		tab2.add(new JLabel("ESTRUCTURAS DEFENSIVAS"));
 		
-		tabs.addTab("PESTAÑA 1", tab1);
-		tabs.addTab("PESTAÑA 2", tab2);
+		JPanel tab3 = new JPanel();
+		tab3.setBackground(Color.LIGHT_GRAY);
+		tab3.add(new JLabel("EDIFICIOS"));
 		
-		add(tabs, BorderLayout.SOUTH);	
+		tabs.addTab("TROPAS", tab1);
+		tabs.addTab("ESTRUCTURAS DEFENSIVAS", tab2);
+		tabs.addTab("EDIFICIOS", tab3);
+		
+		add(tabs, BorderLayout.SOUTH);
+
+		
 	}
 }
