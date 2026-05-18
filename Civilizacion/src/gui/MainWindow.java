@@ -11,10 +11,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import data.QueryGui;
+
 public class MainWindow extends JFrame {
 	private BufferedImage imagenIcono, imagenFondo;
 	private MenuPrincipal menu;
 	private MenuLogin login;
+	private Game game;
+	private QueryGui queryGui;
 	
 	public MainWindow() {
 		setTitle("Civilization");
@@ -46,12 +50,17 @@ public class MainWindow extends JFrame {
 			e.printStackTrace();
 		}
 		
+		queryGui = new QueryGui();
 		
+		iniciarMenuPrincipal();
+		iniciarMenuLogin();
+		
+		setVisible(true);
+	}
+	
+	private void iniciarMenuPrincipal() {
 		menu = new MenuPrincipal(imagenFondo);
-		
 		add(menu);
-		
-		login = new MenuLogin(imagenFondo);
 		
 		menu.getBotonNueva().addActionListener(new ActionListener() {
 
@@ -83,6 +92,10 @@ public class MainWindow extends JFrame {
 				System.exit(0);
 			}
 		});
+	}
+	
+	private void iniciarMenuLogin() {
+		login = new MenuLogin(imagenFondo);
 		
 		login.getBotonVolver().addActionListener(new ActionListener() {
 
@@ -92,6 +105,34 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
-		setVisible(true);
+		login.getBotonAceptar().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				String name = login.getNombreCivilizacion();
+				String modo = login.getModo();
+				boolean jugar = false;
+						
+				if (modo.equals("NUEVA")) {
+					jugar = queryGui.crearCivilizacion(name);
+				} else if (modo.equals("CONTINUAR")) {
+					jugar = queryGui.encontrarCivilizacion(name);
+				}
+				
+				if (jugar) {
+					iniciarGame(name);
+				}
+			}
+		});
+	}
+	
+	public void iniciarGame(String nombreCivilizacion) {
+		setTitle("Civilizations: " + nombreCivilizacion);
+		
+		login.setVisible(false);
+		
+		game = new Game(nombreCivilizacion);
+		add(game);
+		game.setVisible(true);
+		repaint();
 	}
 }

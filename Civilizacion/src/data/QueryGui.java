@@ -13,7 +13,7 @@ public class QueryGui {
 		connection = new DBConection();
 	}
 	
-	public void crearCivilizacion(String nombreCivilizacion) {
+	public boolean crearCivilizacion(String nombreCivilizacion) {
 		
 		String queryCheck = "SELECT name FROM civilizacion_stats WHERE name = ?";
 		String queryInsert = "INSERT INTO civilizacion_stats (name) VALUES (?)";
@@ -29,22 +29,26 @@ public class QueryGui {
 			
 			if (rs.next()) {
 				System.out.println("La civilización '" + nombreCivilizacion + "' ya existe en la base de datos");
+				return false;
 			} else {
 				PreparedStatement psInsert = conn.prepareStatement(queryInsert);
 				psInsert.setString(1, nombreCivilizacion);
 				psInsert.executeUpdate();
 				
 				System.out.println("Civilización '" + nombreCivilizacion + "' creada correctamente");
+				return true;
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Error al insertar la civilización: " + e.getMessage());
+			return false; 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+			return false; 
 		}
 	}
 	
-	public void encontrarCivilizacion(String nombreCivilizacion) {
+	public boolean encontrarCivilizacion(String nombreCivilizacion) {
 		String queryCheck = "SELECT name FROM civilizacion_stats WHERE name = ?";
 		
 		try {
@@ -58,14 +62,19 @@ public class QueryGui {
 			
 			if (rs.next()) {
 				System.out.println("Civilización encontrada: '" + nombreCivilizacion);
+				return true;
 			} else {
 				System.out.println("La civilización '" + nombreCivilizacion + "' no encontrada");
+				return false;
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Error al insertar la civilización: " + e.getMessage());
+			return false; 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error al conectar a la base de datos: " + e.getMessage());
-		} 
+			return false; 
+		}
+		
 	}
 }

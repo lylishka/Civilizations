@@ -22,12 +22,10 @@ public class MenuLogin extends JPanel {
 	private JButton botonAceptar, botonVolver;
 	private JPanel menu;
 	private BufferedImage fondo;
-	private QueryGui queryGui;
-	String modo;
+	private String modo;
 	
 	public MenuLogin(BufferedImage imagen) {
 		this.fondo = imagen;
-		this.queryGui = new QueryGui();
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER, 20, 240));
 		
@@ -65,19 +63,6 @@ public class MenuLogin extends JPanel {
 		menu.add(fila2);
 
 		add(menu);
-		
-		botonAceptar.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				String name = nombre.getText();
-				
-				if (modo.equals("NUEVA")) {
-					queryGui.crearCivilizacion(name);
-				} else if (modo.equals("CONTINUAR")) {
-					queryGui.encontrarCivilizacion(name);
-				}
-			}
-		});
 	}
 	
 	protected void paintComponent(Graphics g) {
@@ -85,6 +70,10 @@ public class MenuLogin extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+	}
+
+	public String getModo() {
+		return modo;
 	}
 
 	public void setModo(String modo) {
@@ -95,6 +84,14 @@ public class MenuLogin extends JPanel {
 		return botonVolver;
 	}
 	
+	public String getNombreCivilizacion() {
+		return nombre.getText();
+	}
+	
+	public JButton getBotonAceptar() {
+		return botonAceptar;
+	}
+
 	public void limpiarNombre() {
 		nombre.setText("");
 	}
