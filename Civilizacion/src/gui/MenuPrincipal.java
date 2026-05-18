@@ -53,6 +53,10 @@ public class MenuPrincipal extends JPanel {
 		return botonNueva;
 	}
 
+	public JButton getBotonContinuar() {
+		return botonContinuar;
+	}
+
 	public JButton getBotonExit() {
 		return botonExit;
 	}

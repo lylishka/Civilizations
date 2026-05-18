@@ -23,7 +23,7 @@ public class DBConection {
 		Class.forName(driver);
 		System.out.println("Driver Cargado");
 		
-		Connection conn = DriverManager.getConnection(urlDatos, user, password);
+		conn = DriverManager.getConnection(urlDatos, user, password);
 		System.out.println("Conexión creada correctamente");
 	}
 

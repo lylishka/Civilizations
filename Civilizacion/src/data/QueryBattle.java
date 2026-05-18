@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import logic.Battle;
 
 public class QueryBattle {
-	
 	private Connection conn;
 
     public QueryBattle(Connection conn) {

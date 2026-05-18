@@ -53,12 +53,26 @@ public class MainWindow extends JFrame {
 		
 		login = new MenuLogin(imagenFondo);
 		
-		
 		menu.getBotonNueva().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				login.limpiarNombre();
+				login.setModo("NUEVA");
 				menu.setVisible(false);
 				add(login);
+				login.setVisible(true);
+				repaint();
+			}
+		});
+		
+		menu.getBotonContinuar().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				login.limpiarNombre();
+				login.setModo("CONTINUAR");
+				menu.setVisible(false);
+				add(login);
+				login.setVisible(true);
 				repaint();
 			}
 		});
@@ -67,6 +81,14 @@ public class MainWindow extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
+			}
+		});
+		
+		login.getBotonVolver().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				login.setVisible(false);
+				menu.setVisible(true);
 			}
 		});
 		
