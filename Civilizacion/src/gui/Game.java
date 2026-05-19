@@ -72,8 +72,6 @@ public class Game extends JPanel {
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.LIGHT_GRAY);
 		
-		tabs.setFocusable(false);
-		
 		JPanel tab1 = new JPanel();
 		tab1.setBackground(Color.LIGHT_GRAY);
 		tab1.setOpaque(false);
