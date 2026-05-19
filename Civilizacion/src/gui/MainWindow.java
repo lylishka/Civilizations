@@ -19,6 +19,7 @@ public class MainWindow extends JFrame {
 	private MenuLogin login;
 	private Game game;
 	private QueryGui queryGui;
+	private boolean jugando = false;
 	
 	public MainWindow() {
 		setTitle("Civilization");
@@ -36,9 +37,8 @@ public class MainWindow extends JFrame {
 		int anchoPantalla = grandaria.width;
 		int altoPantalla = grandaria.height;
 	
-		int x = (anchoPantalla - anchoVentana) / 2;
-		int y = (altoPantalla - altoVentana) / 2;
-		setLocation(x, y);
+		setSize(anchoPantalla + 5, altoPantalla - 45);
+		setLocation(-2, 0);
 		
 		
 		try {
@@ -65,7 +65,6 @@ public class MainWindow extends JFrame {
 		menu.getBotonNueva().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				login.limpiarNombre();
 				login.setModo("NUEVA");
 				menu.setVisible(false);
 				add(login);
@@ -77,7 +76,6 @@ public class MainWindow extends JFrame {
 		menu.getBotonContinuar().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				login.limpiarNombre();
 				login.setModo("CONTINUAR");
 				menu.setVisible(false);
 				add(login);
@@ -100,6 +98,7 @@ public class MainWindow extends JFrame {
 		login.getBotonVolver().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				login.setTexto("Nombre de la civilizacion");
 				login.setVisible(false);
 				menu.setVisible(true);
 			}
@@ -111,7 +110,12 @@ public class MainWindow extends JFrame {
 				String name = login.getNombreCivilizacion();
 				String modo = login.getModo();
 				boolean jugar = false;
-						
+				
+				if (name.equals("Nombre de la civilizacion") || name.equals("") || name.equals("Se debe poner un nombre")) {
+					login.setTexto("Se debe poner un nombre");
+					return;
+				}
+				
 				if (modo.equals("NUEVA")) {
 					jugar = queryGui.crearCivilizacion(name);
 				} else if (modo.equals("CONTINUAR")) {
@@ -134,6 +138,16 @@ public class MainWindow extends JFrame {
 		add(game);
 		game.setVisible(true);
 		
+		jugando = true;
+		
 		repaint();
+	}
+
+	public Game getGame() {
+		return this.game;
+	}
+
+	public boolean isJugando() {
+		return jugando;
 	}
 }

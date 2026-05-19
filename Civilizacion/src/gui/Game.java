@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -18,6 +20,7 @@ import javax.swing.JTabbedPane;
 public class Game extends JPanel {
 	private BufferedImage fondo;
 	private JTabbedPane tabs;
+	private JLabel contador;
 	
 	public Game(String nombreCivilizacion) {
 		setLayout(new BorderLayout());
@@ -28,6 +31,18 @@ public class Game extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		JPanel arribaDerecha = new JPanel(new FlowLayout(1)) {
+			protected void paintComponent(Graphics g) {
+				
+			}
+		};
+		
+		contador = new JLabel("3:00");
+		contador.setFont(new Font("Times New Roman", Font.BOLD, 50));
+		
+		arribaDerecha.add(contador);
+		add(arribaDerecha, BorderLayout.NORTH);
 		
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.LIGHT_GRAY);
@@ -54,8 +69,6 @@ public class Game extends JPanel {
 		tabs.addTab("EDIFICIOS", tab4);
 		
 		add(tabs, BorderLayout.SOUTH);
-
-		
 	}
 	
 	protected void paintComponent(Graphics g) {
@@ -63,6 +76,10 @@ public class Game extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+	}
+	
+	public void actualizarContador(String tiempo) {
+		contador.setText(tiempo);
 	}
 	
 	public void agregarBotonesTropasO(JPanel tropas) {

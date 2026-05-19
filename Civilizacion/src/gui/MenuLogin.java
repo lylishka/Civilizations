@@ -1,6 +1,8 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -11,14 +13,13 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 import data.DBConection;
 import data.QueryGui;
 
 public class MenuLogin extends JPanel {
-	private JTextField nombre;
-	private JLabel comentario;
+	private JTextArea nombre;
 	private JButton botonAceptar, botonVolver;
 	private JPanel menu;
 	private BufferedImage fondo;
@@ -27,7 +28,7 @@ public class MenuLogin extends JPanel {
 	public MenuLogin(BufferedImage imagen) {
 		this.fondo = imagen;
 		
-		setLayout(new FlowLayout(FlowLayout.CENTER, 20, 240));
+		setLayout(new FlowLayout(FlowLayout.CENTER, 120, 360));
 		
 		menu = new JPanel(new GridLayout(2, 1, 0, 20)) {
 			protected void paintComponent(Graphics g) {
@@ -41,9 +42,11 @@ public class MenuLogin extends JPanel {
 			}
 		};
 		
-		comentario = new JLabel("Nombre de la civilizacion:");
-		nombre = new JTextField(20);
-		fila1.add(comentario);
+		
+		nombre = new JTextArea(1, 20);
+		nombre.setText("Nombre de la civilizacion");
+		nombre.setPreferredSize(new Dimension(350, 40));
+		nombre.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		fila1.add(nombre);
 		
 		
@@ -53,8 +56,10 @@ public class MenuLogin extends JPanel {
 			}
 		};
 		
-		botonAceptar = new JButton("CONFIRMAR");		
+		botonAceptar = new JButton("CONFIRMAR");
+		botonAceptar.setPreferredSize(new Dimension(130, 60));
 		botonVolver = new JButton("VOLVER");
+		botonVolver.setPreferredSize(new Dimension(130, 60));
 		
 		fila2.add(botonAceptar);
 		fila2.add(botonVolver);
@@ -87,13 +92,13 @@ public class MenuLogin extends JPanel {
 	public String getNombreCivilizacion() {
 		return nombre.getText();
 	}
-	
-	public JButton getBotonAceptar() {
-		return botonAceptar;
+
+	public void setTexto(String texto) {
+		nombre.setText(texto);
 	}
 
-	public void limpiarNombre() {
-		nombre.setText("");
+	public JButton getBotonAceptar() {
+		return botonAceptar;
 	}
 }
 

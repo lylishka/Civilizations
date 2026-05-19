@@ -27,13 +27,13 @@ public class MenuPrincipal extends JPanel {
 		};
 		
 		botonNueva = new JButton("NUEVA PARTIDA");
-		botonNueva.setPreferredSize(new Dimension(130, 45));
+		botonNueva.setPreferredSize(new Dimension(130, 60));
 		
 		botonContinuar = new JButton("CONTINUAR");
-		botonContinuar.setPreferredSize(new Dimension(130, 45));
+		botonContinuar.setPreferredSize(new Dimension(130, 60));
 		
 		botonExit = new JButton("SALIR");
-		botonExit.setPreferredSize(new Dimension(130, 45));
+		botonExit.setPreferredSize(new Dimension(130, 60));
 		
 		menuBotones.add(botonNueva);
 		menuBotones.add(botonContinuar);
