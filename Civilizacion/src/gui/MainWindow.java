@@ -11,7 +11,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import data.QueryBattle;
 import data.QueryGui;
+import logic.Battle;
 
 public class MainWindow extends JFrame {
 	private BufferedImage imagenIcono, imagenFondo;
@@ -66,6 +68,7 @@ public class MainWindow extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				login.setModo("NUEVA");
+				login.setTexto("Nombre de la civilizacion");
 				menu.setVisible(false);
 				add(login);
 				login.setVisible(true);
@@ -77,6 +80,7 @@ public class MainWindow extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				login.setModo("CONTINUAR");
+				login.setTexto("Nombre de la civilizacion");
 				menu.setVisible(false);
 				add(login);
 				login.setVisible(true);
@@ -123,24 +127,55 @@ public class MainWindow extends JFrame {
 				}
 				
 				if (jugar) {
-					iniciarGame(name);
+					Battle battallaInciada = queryGui.getBatallaActual();
+					iniciarGame(name, battallaInciada);
 				}
 			}
 		});
 	}
 	
-	public void iniciarGame(String nombreCivilizacion) {
+	public void iniciarGame(String nombreCivilizacion, Battle batalla) {
 		setTitle("Civilizations: " + nombreCivilizacion);
 		
 		login.setVisible(false);
 		
-		game = new Game(nombreCivilizacion);
+		game = new Game(nombreCivilizacion, batalla);
 		add(game);
 		game.setVisible(true);
 		
 		jugando = true;
 		
 		repaint();
+		
+		game.getBotonSaveMenu().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				guardarPartida(nombreCivilizacion, batalla);
+				game.setVisible(false);
+				login.setTexto("Nombre de la civilizacion");
+				menu.setVisible(true);
+			}
+		});
+		
+		game.getBotonSaveExit().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				guardarPartida(nombreCivilizacion, batalla);
+				System.exit(0);
+			}
+		});
+	}
+	
+	public void guardarPartida(String nombreCivilizacion, Battle batalla) {
+		int idCivilizacion = queryGui.getIdCivilizacion(nombreCivilizacion);
+		
+		if (idCivilizacion != -1) {
+			QueryBattle queryBattle = new QueryBattle();
+			queryBattle.saveBattle(batalla, idCivilizacion, "Ninguno");
+			System.out.println("Batalla Guardada");
+		} else {
+			System.out.println("No se guardo la Batalla");
+		}
 	}
 
 	public Game getGame() {

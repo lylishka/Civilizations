@@ -17,12 +17,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import logic.Battle;
+
 public class Game extends JPanel {
 	private BufferedImage fondo;
 	private JTabbedPane tabs;
 	private JLabel contador;
+	private Battle batallaActual;
+	private JButton	botonSaveMenu, botonSaveExit;
 	
-	public Game(String nombreCivilizacion) {
+	public Game(String nombreCivilizacion, Battle batallaActual) {
+		this.batallaActual = batallaActual;
 		setLayout(new BorderLayout());
 		
 		try {
@@ -32,7 +37,7 @@ public class Game extends JPanel {
 			e.printStackTrace();
 		}
 		
-		JPanel arribaDerecha = new JPanel(new FlowLayout(1)) {
+		JPanel arribaCentro = new JPanel(new FlowLayout(1)) {
 			protected void paintComponent(Graphics g) {
 				
 			}
@@ -41,8 +46,30 @@ public class Game extends JPanel {
 		contador = new JLabel("3:00");
 		contador.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		
-		arribaDerecha.add(contador);
-		add(arribaDerecha, BorderLayout.NORTH);
+		arribaCentro.add(contador);
+		add(arribaCentro, BorderLayout.NORTH);
+		
+		JPanel abajo = new JPanel(new BorderLayout()) {
+			protected void paintComponent(Graphics g) {
+				
+			}
+		};
+		
+		JPanel abajoDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT)) {
+			protected void paintComponent(Graphics g) {
+				
+			}
+		};
+		
+		botonSaveMenu = new JButton("Guardar e Ir al Menú");
+		botonSaveExit = new JButton("Guardar y Salir");
+		
+		abajoDerecha.add(botonSaveMenu);
+		abajoDerecha.add(botonSaveExit);
+		
+		abajo.add(abajoDerecha, BorderLayout.NORTH);
+		
+		
 		
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.LIGHT_GRAY);
@@ -68,9 +95,24 @@ public class Game extends JPanel {
 		tabs.addTab("ESTRUCTURAS DEFENSIVAS", tab3);
 		tabs.addTab("EDIFICIOS", tab4);
 		
-		add(tabs, BorderLayout.SOUTH);
+		abajo.add(tabs, BorderLayout.CENTER);
+		add(abajo, BorderLayout.SOUTH);
 	}
 	
+	
+		
+	public JButton getBotonSaveMenu() {
+		return botonSaveMenu;
+	}
+
+	public JButton getBotonSaveExit() {
+		return botonSaveExit;
+	}
+
+	public Battle getBatallaActual() {
+		return batallaActual;
+	}
+
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;

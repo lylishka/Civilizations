@@ -9,15 +9,25 @@ import logic.Battle;
 
 public class QueryBattle {
 	private Connection conn;
+	private DBConection connection;
 
-    public QueryBattle(Connection conn) {
-        this.conn = conn;
+    public QueryBattle() {
+    	try {
+        	connection = new DBConection();
+			connection.conectar();
+			this.conn = connection.getConn();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
     }
     
     public void saveBattle(Battle battle, int civilizationId, String winner) {
         try {
-            int numBattle = saveBattleStats(battle, civilizationId, winner);
-            saveBattleLog(battle, civilizationId, numBattle);
+            int numBattle = saveBattleStats(battle, civilizationId);
+            saveBattleLog(battle, civilizationId, numBattle, winner);
             saveCivilizationAttackStats(battle, civilizationId, numBattle);
             saveCivilizationDefenseStats(battle, civilizationId, numBattle);
             saveCivilizationSpecialStats(battle, civilizationId, numBattle);
@@ -27,10 +37,10 @@ public class QueryBattle {
         }
     }
     
-    public int saveBattleStats(Battle battle, int civilizationId, String winner) throws SQLException {
+    public int saveBattleStats(Battle battle, int civilizationId) throws SQLException {
         String sql = "INSERT INTO battle_stats " +
-                     "(civilization_id, wood_acquired, iron_acquired, winner) " +
-                     "VALUES (?,?,?,?)";
+                     "(civilization_id, wood_acquired, iron_acquired) " +
+                     "VALUES (?,?,?)";
 
         // RETURN_GENERATED_KEYS para obtener el num_battle que genera AUTO_INCREMENT
         // Lo necesitamos para insertarlo en battle_log y las stats
@@ -39,10 +49,8 @@ public class QueryBattle {
         ps.setInt(1,    civilizationId);
         ps.setInt(2,    battle.getWasteWoodIron()[0]); // madera generada en batalla
         ps.setInt(3,    battle.getWasteWoodIron()[1]); // hierro generado en batalla
-        ps.setString(4, winner);           // "Civilization" o "Enemy"
 
         ps.executeUpdate();
-        
 
         // Obtenemos el num_battle que MySQL generó automáticamente
         ResultSet rs = ps.getGeneratedKeys();
@@ -55,10 +63,10 @@ public class QueryBattle {
         return -1; // si algo falla devolvemos -1
     }
     
-    public void saveBattleLog(Battle battle, int civilizationId, int numBattle) throws SQLException {
+    public void saveBattleLog(Battle battle, int civilizationId, int numBattle, String winner) throws SQLException {
         String sql = "INSERT INTO battle_log " +
-                     "(civilization_id, num_battle, log_entry) " +
-                     "VALUES (?,?,?)";
+                     "(civilization_id, num_battle, winner, log_entry) " +
+                     "VALUES (?,?,?,?)";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -69,7 +77,8 @@ public class QueryBattle {
         for (String line : lines) {
             ps.setInt(1,    civilizationId);
             ps.setInt(2,    numBattle);
-            ps.setString(3, line);
+            ps.setString(3, winner);           // "Civilization" o "Enemy"
+            ps.setString(4, line);
             ps.executeUpdate();
         }
         System.out.println("Battle log guardado");
