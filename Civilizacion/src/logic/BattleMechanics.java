@@ -41,7 +41,9 @@ public class BattleMechanics extends Battle implements Variables {
 	
 	// Calcula el porsentaje restante de unidades 
 	public int remainderPencentageFleet(ArrayList<MilitaryUnit> army, int initialNumber) {
-		if (initialNumber == 0) return 0;
+		if (initialNumber == 0) {
+			return 0;
+		}
 		
 		return (army.size() * 100) / initialNumber;
 	}
