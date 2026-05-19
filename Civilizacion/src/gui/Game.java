@@ -34,19 +34,24 @@ public class Game extends JPanel {
 		
 		JPanel tab1 = new JPanel();
 		tab1.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesTropas(tab1);
+		agregarBotonesTropasO(tab1);
 		
 		JPanel tab2 = new JPanel();
 		tab2.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesDefensas(tab2);
+		agregarBotonesTropasE(tab2);
 		
 		JPanel tab3 = new JPanel();
 		tab3.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesEdificios(tab3);
+		agregarBotonesDefensas(tab3);
 		
-		tabs.addTab("TROPAS", tab1);
-		tabs.addTab("ESTRUCTURAS DEFENSIVAS", tab2);
-		tabs.addTab("EDIFICIOS", tab3);
+		JPanel tab4 = new JPanel();
+		tab4.setBackground(Color.LIGHT_GRAY);
+		agregarBotonesEdificios(tab4);
+		
+		tabs.addTab("TROPAS OFENSIVAS", tab1);
+		tabs.addTab("TROPAS ESPECIALES", tab2);
+		tabs.addTab("ESTRUCTURAS DEFENSIVAS", tab3);
+		tabs.addTab("EDIFICIOS", tab4);
 		
 		add(tabs, BorderLayout.SOUTH);
 
@@ -60,7 +65,7 @@ public class Game extends JPanel {
 		g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
 	}
 	
-	public void agregarBotonesTropas(JPanel tropas) {
+	public void agregarBotonesTropasO(JPanel tropas) {
 		ImageIcon iconEspadachin = new ImageIcon("./src/gui/espada.png");
 		JButton botonEspadachin = new JButton("Espadachin", iconEspadachin);
 		tropas.add(botonEspadachin);
@@ -76,7 +81,9 @@ public class Game extends JPanel {
 		ImageIcon iconCanon = new ImageIcon("./src/gui/canon.png");
 		JButton botonCanon = new JButton("Canon", iconCanon);
 		tropas.add(botonCanon);
-		
+	}
+	
+	public void agregarBotonesTropasE(JPanel tropas) {		
 		ImageIcon iconMago = new ImageIcon("./src/gui/mago.png");
 		JButton botonMago = new JButton("Mago", iconMago);
 		tropas.add(botonMago);
