@@ -173,6 +173,6 @@ public class QueryBattle {
             ps.setInt(5,    battle.getEnemyDrops());        // cuántas murieron
             ps.executeUpdate();
         }
-        System.out.println("Enemy  stats guardadas");
+        System.out.println("Enemy stats guardadas");
     }
 }

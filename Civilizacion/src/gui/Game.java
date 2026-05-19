@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -69,25 +71,29 @@ public class Game extends JPanel {
 		
 		abajo.add(abajoDerecha, BorderLayout.NORTH);
 		
-		
-		
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.LIGHT_GRAY);
 		
+		tabs.setFocusable(false);
+		
 		JPanel tab1 = new JPanel();
 		tab1.setBackground(Color.LIGHT_GRAY);
+		tab1.setOpaque(false);
 		agregarBotonesTropasO(tab1);
 		
 		JPanel tab2 = new JPanel();
 		tab2.setBackground(Color.LIGHT_GRAY);
+		tab2.setOpaque(false);
 		agregarBotonesTropasE(tab2);
 		
 		JPanel tab3 = new JPanel();
 		tab3.setBackground(Color.LIGHT_GRAY);
+		tab3.setOpaque(false);
 		agregarBotonesDefensas(tab3);
 		
 		JPanel tab4 = new JPanel();
 		tab4.setBackground(Color.LIGHT_GRAY);
+		tab4.setOpaque(false);
 		agregarBotonesEdificios(tab4);
 		
 		tabs.addTab("TROPAS OFENSIVAS", tab1);
@@ -98,8 +104,6 @@ public class Game extends JPanel {
 		abajo.add(tabs, BorderLayout.CENTER);
 		add(abajo, BorderLayout.SOUTH);
 	}
-	
-	
 		
 	public JButton getBotonSaveMenu() {
 		return botonSaveMenu;
