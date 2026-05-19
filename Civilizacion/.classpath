@@ -5,7 +5,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="gui/tropas/" kind="src" path="src"/>
 	<classpathentry kind="lib" path="mysql-connector-java-8.0.15.jar">
 		<attributes>
 			<attribute name="module" value="true"/>

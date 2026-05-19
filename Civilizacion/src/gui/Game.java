@@ -2,7 +2,13 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,10 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public class Game extends JPanel {
+	private BufferedImage fondo;
 	private JTabbedPane tabs;
 	
 	public Game(String nombreCivilizacion) {
 		setLayout(new BorderLayout());
+		
+		try {
+			fondo = ImageIO.read(new File("./src/gui/fondo-juego.png"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.LIGHT_GRAY);
@@ -39,64 +53,71 @@ public class Game extends JPanel {
 		
 	}
 	
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+	}
+	
 	public void agregarBotonesTropas(JPanel tropas) {
-		ImageIcon iconEspadachin = new ImageIcon("imagen");
+		ImageIcon iconEspadachin = new ImageIcon("./src/gui/espada.png");
 		JButton botonEspadachin = new JButton("Espadachin", iconEspadachin);
 		tropas.add(botonEspadachin);
 		
-		ImageIcon iconLancero = new ImageIcon("imagen");
+		ImageIcon iconLancero = new ImageIcon("./src/gui/lanza.png");
 		JButton botonLancero = new JButton("Lancero", iconLancero);
 		tropas.add(botonLancero);
 		
-		ImageIcon iconBallesta = new ImageIcon("imagen");
+		ImageIcon iconBallesta = new ImageIcon("./src/gui/ballesta.png");
 		JButton botonBallesta = new JButton("Ballesta", iconBallesta);
 		tropas.add(botonBallesta);
 		
-		ImageIcon iconCanon = new ImageIcon("imagen");
+		ImageIcon iconCanon = new ImageIcon("./src/gui/canon.png");
 		JButton botonCanon = new JButton("Canon", iconCanon);
 		tropas.add(botonCanon);
 		
-		ImageIcon iconMago = new ImageIcon("imagen");
+		ImageIcon iconMago = new ImageIcon("./src/gui/mago.png");
 		JButton botonMago = new JButton("Mago", iconMago);
 		tropas.add(botonMago);
 		
-		ImageIcon iconSacerdote = new ImageIcon("imagen");
+		ImageIcon iconSacerdote = new ImageIcon("./src/gui/sacerdote.png");
 		JButton botonSacerdote = new JButton("Sacerdote", iconSacerdote);
 		tropas.add(botonSacerdote);
 	}
 	
 	public void agregarBotonesDefensas(JPanel defensas) {
-		ImageIcon iconTorreLanza = new ImageIcon("imagen");
-		JButton botonTorreLanza = new JButton("Torre Lanza", iconTorreLanza);
-		defensas.add(botonTorreLanza);
+		ImageIcon iconTorreFlechas = new ImageIcon("./src/gui/torreflechas.png");
+		JButton botonTorreFlechas = new JButton("Torre de Flechas", iconTorreFlechas);
+		defensas.add(botonTorreFlechas);
 		
-		ImageIcon iconCatapulta = new ImageIcon("imagen");
+		ImageIcon iconCatapulta = new ImageIcon("./src/gui/catapulta.png");
 		JButton botonCatapulta = new JButton("Catapulta", iconCatapulta);
 		defensas.add(botonCatapulta);
 		
-		ImageIcon iconTorreCohete = new ImageIcon("imagen");
-		JButton botonTorreCohete = new JButton("Torre Cohete", iconTorreCohete);
-		defensas.add(botonTorreCohete);
+		ImageIcon iconTorreLanzaCohetes = new ImageIcon("./src/gui/torrecohetes.png");
+		JButton botonTorreLanzaCohetes = new JButton("Torre Lanza Cohetes", iconTorreLanzaCohetes);
+		defensas.add(botonTorreLanzaCohetes);
 	}
 	
 	public void agregarBotonesEdificios(JPanel edificios) {
-		ImageIcon iconGranja = new ImageIcon("imagen");
+		ImageIcon iconGranja = new ImageIcon("./src/gui/granja.png");
 		JButton botonGranja = new JButton("Granja", iconGranja);
 		edificios.add(botonGranja);
 		
-		ImageIcon iconCarpinteria = new ImageIcon("imagen");
+		ImageIcon iconCarpinteria = new ImageIcon("./src/gui/carpinteria.png");
 		JButton botonCarpinteria = new JButton("Carpinteria", iconCarpinteria);
 		edificios.add(botonCarpinteria);
 		
-		ImageIcon iconHerreria = new ImageIcon("imagen");
+		ImageIcon iconHerreria = new ImageIcon("./src/gui/herreria.png");
 		JButton botonHerreria = new JButton("Herreria", iconHerreria);
 		edificios.add(botonHerreria);
 		
-		ImageIcon iconTorreMagica = new ImageIcon("imagen");
+		ImageIcon iconTorreMagica = new ImageIcon("./src/gui/torremagica.png");
 		JButton botonTorreMagica = new JButton("Torre Mágica", iconTorreMagica);
 		edificios.add(botonTorreMagica);
 		
-		ImageIcon iconIglesia = new ImageIcon("imagen");
+		ImageIcon iconIglesia = new ImageIcon("./src/gui/iglesia.png");
 		JButton botonIglesia = new JButton("Iglesia", iconIglesia);
 		edificios.add(botonIglesia);
 	}
