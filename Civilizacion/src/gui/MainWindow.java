@@ -134,11 +134,10 @@ public class MainWindow extends JFrame {
 		});
 	}
 	
-	public void iniciarGame(String nombreCivilizacion, Battle batalla) {
-		setTitle("Civilizations: " + nombreCivilizacion);
-		
+	public void iniciarGame(String nombreCivilizacion, Battle batalla) {		
 		login.setVisible(false);
 		
+		setTitle("Civilizations: " + nombreCivilizacion);
 		game = new Game(nombreCivilizacion, batalla);
 		add(game);
 		game.setVisible(true);
@@ -146,6 +145,13 @@ public class MainWindow extends JFrame {
 		jugando = true;
 		
 		repaint();
+		
+		game.getBotonSave().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				guardarPartida(nombreCivilizacion, batalla);
+			}
+		});
 		
 		game.getBotonSaveMenu().addActionListener(new ActionListener() {
 
@@ -172,7 +178,6 @@ public class MainWindow extends JFrame {
 		if (idCivilizacion != -1) {
 			QueryBattle queryBattle = new QueryBattle();
 			queryBattle.saveBattle(batalla, idCivilizacion, "Ninguno");
-			System.out.println("Batalla Guardada");
 		} else {
 			System.out.println("No se guardo la Batalla");
 		}

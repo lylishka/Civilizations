@@ -21,10 +21,8 @@ public class DBConection {
 	
 	public void conectar() throws SQLException, ClassNotFoundException {
 		Class.forName(driver);
-		System.out.println("Driver Cargado");
 		
 		conn = DriverManager.getConnection(urlDatos, user, password);
-		System.out.println("Conexión creada correctamente");
 	}
 
 	public Connection getConn() {

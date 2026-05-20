@@ -88,7 +88,6 @@ public class QueryGui {
 			
 			if (rsName.next()) {
 				int idCivilization = rsName.getInt("civilization_id");
-				System.out.println("Civilización encontrada: '" + nombreCivilizacion + "'");
 				
 				PreparedStatement psBatalla = conn.prepareStatement(queryBattle);
 				psBatalla.setInt(1, idCivilization);
@@ -102,7 +101,6 @@ public class QueryGui {
 					int madera = rsBatalla.getInt("wood_acquired");
 					int hierro = rsBatalla.getInt("iron_acquired");
 					
-					System.out.println("Recursos de " + nombreCivilizacion + " -> Madera: " + madera + ", Hierro: " + hierro);
 					this.batallaActual = new Battle(tropasCivilizacion, tropasEnemigos);
 					
 					int[] recursos = {madera, hierro};
@@ -145,5 +143,67 @@ public class QueryGui {
 		}
 		
 		return id;
+	}
+	
+	public int getIdBattle(int idCivilizacion) {
+		String queryId = "SELECT num_battle FROM battle_stats WHERE civilization_id = ?";
+		int id = -1;
+		
+		try {
+			connection.conectar();
+			this.conn = connection.getConn();
+			
+			PreparedStatement ps = conn.prepareStatement(queryId);
+			ps.setInt(1, idCivilizacion);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				id = rs.getInt("num_battle");
+			}
+		} catch (Exception e) {
+			System.out.println("Error al recuperar la ID de la batalla: " + e.getMessage());
+		}
+		
+		return id;
+	}
+	
+	public int getCantidadElemento(int idCivilizacion, int idBattle, String columna, String tabla, boolean esTipo, int numBattle) {	
+		int cantidad = 0;
+		
+		String query;
+		if (esTipo) {
+			query = "SELECT initial FROM " + tabla + "WHERE num_battle = ? AND civilization_id = ? AND type = ? AND num_battle = ?";
+		} else {
+			query = "SELECT " + columna + " FROM " + tabla + " WHERE civilization_id = ?";
+		}
+		
+		try {
+			connection.conectar();
+			this.conn = connection.getConn();
+			
+			PreparedStatement ps = conn.prepareStatement(query);
+			
+			if (esTipo) {
+				ps.setInt(1, idBattle);
+				ps.setInt(2, idCivilizacion);
+				ps.setString(3, columna);
+				ps.setInt(4, numBattle);
+			} else {
+				ps.setInt(1, idCivilizacion);
+			}
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				if (esTipo) {
+					cantidad = rs.getInt(2);
+				} else {
+					cantidad = rs.getInt(columna);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error al obtener la cantidad: " + e.getMessage());
+		}
+		
+		return cantidad;
 	}
 }

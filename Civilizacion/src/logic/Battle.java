@@ -2,11 +2,12 @@ package logic;
 
 import java.util.ArrayList;
 import game.MilitaryUnit;
+import game.Variables;
 
-public class Battle {
+public class Battle implements Variables {
 	// Almacenar Unidades
-		private ArrayList<MilitaryUnit> civilizationArmy;
-		private ArrayList<MilitaryUnit> enemyArmy;
+	private ArrayList<MilitaryUnit> civilizationArmy;
+	private ArrayList<MilitaryUnit> enemyArmy;
 		
 	//
 	private ArrayList[] armies;
@@ -23,21 +24,26 @@ public class Battle {
 		
 	// Residuos generados: [madera, hierro]
 	private int[] wasteWoodIron;
+	
+	// Residuos generados: [comida, mana]
+	private int[] wasteFoodMana;
 		
 	// Bajas de cada bando
 	private int enemyDrops;
 	private int civilizationDrops;
 		
 	// Perdidas de recursos: [2][4]
-		private int[][] resourcesLooses;
+	private int[][] resourcesLooses;
 		
 	// Cantidad de cada tipo de unidad al inicio: [2][9]
 	private int[][] initialArmies;
 		
 	// Cantidad de unidades actuales de cada tipo: [9] para cada uno
-	private int[] actualNumberUnitsCivilization;
+	private int[] actualNumberUnitsCivilization; // Swordsman, Spearman, Crossbow, Cannon, ArrowTower, Catapult, RocketLauncherTower, Magician, Priest 
 	private int[] actualNumberUnitsEnemy;
-		
+	
+	// Cantidad de edificios actuales:
+	private int[] actualNumberBuldingCivilization; // Farm, Carpentry, Smithy, MagicTower, Church
 		
 	public Battle(ArrayList<MilitaryUnit> civilizationArmy, ArrayList<MilitaryUnit> enemyArmy) {
 		super();
@@ -58,8 +64,10 @@ public class Battle {
 		this.resourcesLooses = new int[2][4];
 		this.initialArmies = new int[2][9];
 		this.wasteWoodIron = new int[2];
+		this.wasteFoodMana = new int[2];
 		this.actualNumberUnitsCivilization = new int[9];
 		this.actualNumberUnitsEnemy = new int[9];
+		this.actualNumberBuldingCivilization = new int[5];	
 	}
 
 	public ArrayList<game.MilitaryUnit> getCivilizationArmy() {
@@ -170,8 +178,23 @@ public class Battle {
 			return actualNumberUnitsEnemy;
 		}
 
-
 		public void setActualNumberUnitsEnemy(int[] actualNumberUnitsEnemy) {
 			this.actualNumberUnitsEnemy = actualNumberUnitsEnemy;
+		}
+
+		public int[] getActualNumberBuldingCivilization() {
+			return actualNumberBuldingCivilization;
+		}
+
+		public void setActualNumberBuldingCivilization(int[] actualNumberBuldingCivilization) {
+			this.actualNumberBuldingCivilization = actualNumberBuldingCivilization;
+		}
+
+		public int[] getWasteFoodMana() {
+			return wasteFoodMana;
+		}
+
+		public void setWasteFoodMana(int[] wasteFoodMana) {
+			this.wasteFoodMana = wasteFoodMana;
 		}	
 }
