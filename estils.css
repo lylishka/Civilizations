@@ -99,9 +99,10 @@ section{
 }
 
 .cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap:20px;
+    justify-content: center;
 }
 
 .card{
@@ -110,6 +111,8 @@ section{
     padding:20px;
     box-shadow:0 5px 15px rgba(0,0,0,0.2);
     transition:0.4s;
+    width: 280px;
+    flex-grow: 0;
 }
 
 .card:hover{
@@ -203,17 +206,40 @@ footer p{
 
 @media(max-width:768px){
 
+    header {
+        padding: 10px 15px; 
+    }
+
     .navbar{
         flex-direction:column;
-        gap:20px;
+        gap:10px;
     }
 
     .menu{
-        flex-direction:column;
-        text-align:center;
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        padding: 0;
+    }
+    
+    .menu a {
+        font-size: 0.9rem;
     }
 
-    .hero h2{
-        font-size:2.5rem;
+    .logo img {
+        width: 45px; /* Hace el logo más pequeño en móvil */
+    }
+
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+
+    section {
+        padding: 40px 5%; /* Más espacio útil en los lados de la pantalla */
     }
 }
