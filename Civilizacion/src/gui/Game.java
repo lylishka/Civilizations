@@ -286,13 +286,13 @@ public class Game extends JPanel {
 		
 		pestañas.add(tabs, BorderLayout.CENTER);
 		
-		tabs.addTab("TROPAS OFENSIVAS", contenidoPestñas("tropasO"));
-		tabs.addTab("TROPAS ESPECIALES", contenidoPestñas("tropasE"));
-		tabs.addTab("ESTRUCTURAS DEFENSIVAS", contenidoPestñas("defensas"));
-		tabs.addTab("EDIFICIOS", contenidoPestñas("edificios"));
+		tabs.addTab("TROPAS OFENSIVAS", contenidotabs("tropasO"));
+		tabs.addTab("TROPAS ESPECIALES", contenidotabs("tropasE"));
+		tabs.addTab("ESTRUCTURAS DEFENSIVAS", contenidotabs("defensas"));
+		tabs.addTab("EDIFICIOS", contenidotabs("edificios"));
 	}
 	
-	public JPanel contenidoPestñas(String tipo) {
+	public JPanel contenidotabs(String tipo) {
 		JPanel contenidoPestañas = new JPanel(new BorderLayout());
 		contenidoPestañas.setOpaque(false);
 		
@@ -301,7 +301,7 @@ public class Game extends JPanel {
 		
 		JPanel costes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		costes.setOpaque(false);
-		costes.setPreferredSize(new Dimension(250, 50));
+		costes.setPreferredSize(new Dimension(350, 50));
 		
 		if (tipo.equals("tropasO")) {
 			agregarBotonesTropasO(botones, costes);
