@@ -147,6 +147,13 @@ public class MainWindow extends JFrame {
 		
 		repaint();
 		
+		game.getBotonSave().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				guardarPartida(nombreCivilizacion, batalla);
+			}
+		});
+		
 		game.getBotonSaveMenu().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {

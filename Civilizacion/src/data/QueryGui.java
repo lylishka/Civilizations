@@ -146,4 +146,27 @@ public class QueryGui {
 		
 		return id;
 	}
+	
+	public int getCantidadElemento(String nombreCivlizacion, String columna, String tabla) {
+		String query = "SELECT " + columna + " FROM " + tabla + " WHERE name = ?";
+		int cantidad = 0;
+		
+		
+		try {
+			connection.conectar();
+			this.conn = connection.getConn();
+			
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, nombreCivlizacion);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				cantidad = rs.getInt(columna);
+			}
+		} catch (Exception e) {
+			System.out.println("Error al obtener la cantidad: " + e.getMessage());
+		}
+		
+		return cantidad;
+	}
 }

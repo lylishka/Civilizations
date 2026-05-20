@@ -24,10 +24,13 @@ public class Game extends JPanel {
 	private JTabbedPane tabs;
 	private JLabel contador;
 	private Battle batallaActual;
-	private JButton	botonSaveMenu, botonSaveExit;
+	private JButton	botonSave, botonSaveMenu, botonSaveExit;
+	private String nombreCivilizacion;
 	
 	public Game(String nombreCivilizacion, Battle batallaActual) {
+		this.nombreCivilizacion = nombreCivilizacion;
 		this.batallaActual = batallaActual;
+		
 		setLayout(new BorderLayout());
 		
 		try {
@@ -55,19 +58,21 @@ public class Game extends JPanel {
 			}
 		};
 		
-		JPanel abajoDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT)) {
+		JPanel botonesGuardar = new JPanel(new FlowLayout(FlowLayout.RIGHT)) {
 			protected void paintComponent(Graphics g) {
 				
 			}
 		};
 		
+		botonSave = new JButton("Guardar");
 		botonSaveMenu = new JButton("Guardar e Ir al Menú");
 		botonSaveExit = new JButton("Guardar y Salir");
 		
-		abajoDerecha.add(botonSaveMenu);
-		abajoDerecha.add(botonSaveExit);
+		botonesGuardar.add(botonSave);
+		botonesGuardar.add(botonSaveMenu);
+		botonesGuardar.add(botonSaveExit);
 		
-		abajo.add(abajoDerecha, BorderLayout.NORTH);
+		abajo.add(botonesGuardar, BorderLayout.NORTH);
 		
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.LIGHT_GRAY);
@@ -101,6 +106,10 @@ public class Game extends JPanel {
 		add(abajo, BorderLayout.SOUTH);
 	}
 		
+	public JButton getBotonSave() {
+		return botonSave;
+	}
+
 	public JButton getBotonSaveMenu() {
 		return botonSaveMenu;
 	}
