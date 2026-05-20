@@ -137,6 +137,7 @@ public class MainWindow extends JFrame {
 	public void iniciarGame(String nombreCivilizacion, Battle batalla) {		
 		login.setVisible(false);
 		
+		setTitle("Civilizations: " + nombreCivilizacion);
 		game = new Game(nombreCivilizacion, batalla);
 		add(game);
 		game.setVisible(true);
