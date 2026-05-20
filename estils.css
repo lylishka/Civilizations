@@ -113,6 +113,7 @@ section{
     transition:0.4s;
     width: 280px;
     flex-grow: 0;
+    text-align: center;
 }
 
 .card:hover{
@@ -122,6 +123,11 @@ section{
 .card img{
     width:100%;
     border-radius:10px;
+}
+
+.card p {
+    color: #d4af37;
+    font-weight: bold;
 }
 
 .card-portada {
