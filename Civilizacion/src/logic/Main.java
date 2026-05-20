@@ -24,10 +24,15 @@ public class Main {
 
 				public void run() {
 					if (window.isJugando()) {
-						--segundosRestantes;
+						if (window.getGame().isSiguienteBatalla()) {
+							segundosRestantes = 1;
+							window.getGame().setSiguienteBatalla(false);
+						} 
 						
 						if (segundosRestantes <= 0) {
 							segundosRestantes = 180;
+						} else {
+							--segundosRestantes;
 						}
 						
 						int minutos = segundosRestantes / 60;
