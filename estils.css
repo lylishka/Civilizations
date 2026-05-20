@@ -6,12 +6,18 @@
     font-family:Arial, Helvetica, sans-serif;
 }
 
+html {
+    height: 100%;
+}
 
 body{
     background:linear-gradient(to bottom,#f5f5dc,#d6b85a);
+    background-attachment: fixed;
     color:#111;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
-
 
 header{
     background:#111;
@@ -22,7 +28,6 @@ header{
     z-index:1000;
 }
 
-
 .navbar{
     display:flex;
     justify-content:space-between;
@@ -30,31 +35,26 @@ header{
     flex-wrap:wrap;
 }
 
-
 .logo{
     display:flex;
     align-items:center;
     gap:15px;
 }
 
-
 .logo img{
     width:70px;
     animation:float 3s ease-in-out infinite;
 }
 
-
 .logo h1{
     color:#d4af37;
 }
-
 
 .menu{
     display:flex;
     gap:20px;
     list-style:none;
 }
-
 
 .menu a{
     text-decoration:none;
@@ -63,11 +63,9 @@ header{
     transition:0.3s;
 }
 
-
 .menu a:hover{
     color:#d4af37;
 }
-
 
 .hero{
     min-height:80vh;
@@ -81,13 +79,11 @@ header{
     padding:20px;
 }
 
-
 .hero h2{
     font-size:4rem;
     text-shadow:2px 2px 10px black;
     animation:fadeIn 2s ease;
 }
-
 
 .hero p{
     margin-top:20px;
@@ -98,18 +94,15 @@ header{
     border-radius:10px;
 }
 
-
 section{
     padding:60px 10%;
 }
-
 
 .cards{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
 }
-
 
 .card{
     background:white;
@@ -119,22 +112,18 @@ section{
     transition:0.4s;
 }
 
-
 .card:hover{
     transform:translateY(-10px);
 }
-
 
 .card img{
     width:100%;
     border-radius:10px;
 }
 
-
 .table-container{
     overflow-x:auto;
 }
-
 
 table{
     width:100%;
@@ -142,19 +131,16 @@ table{
     background:white;
 }
 
-
 th,td{
     border:1px solid #ccc;
     padding:15px;
     text-align:center;
 }
 
-
 th{
     background:#111;
     color:#d4af37;
 }
-
 
 .stats{
     display:flex;
@@ -172,25 +158,20 @@ th{
     animation:fadeInUp 1s ease;
 }
 
-
 .stat-box img{
     width:70px;
 }
-
 
 footer{
     background:#111;
     color:white;
     text-align:center;
     padding:30px;
-    margin-top:50px;
 }
-
 
 footer p{
     color:#d4af37;
 }
-
 
 @keyframes fadeIn{
     from{
@@ -203,7 +184,6 @@ footer p{
     }
 }
 
-
 @keyframes fadeInUp{
     from{
         opacity:0;
@@ -215,28 +195,23 @@ footer p{
     }
 }
 
-
 @keyframes float{
     0%{transform:translateY(0px);}
     50%{transform:translateY(-10px);}
     100%{transform:translateY(0px);}
 }
 
-
 @media(max-width:768px){
-
 
     .navbar{
         flex-direction:column;
         gap:20px;
     }
 
-
     .menu{
         flex-direction:column;
         text-align:center;
     }
-
 
     .hero h2{
         font-size:2.5rem;
