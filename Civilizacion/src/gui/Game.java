@@ -2,10 +2,12 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -24,7 +26,7 @@ import logic.Battle;
 public class Game extends JPanel {
 	private BufferedImage fondo;
 	private JTabbedPane tabs;
-	private JLabel contador;
+	private JLabel contador, cantidadMadera, cantidadHierro, cantidadComida, cantidadMana;
 	private Battle batallaActual;
 	private JButton	botonBattle, botonSave, botonSaveMenu, botonSaveExit;
 	private boolean siguienteBatalla = false;
@@ -75,6 +77,38 @@ public class Game extends JPanel {
 		return batallaActual;
 	}
 
+	public JLabel getCantidadMadera() {
+		return cantidadMadera;
+	}
+
+	public void setCantidadMadera(String cantidadMadera) {
+		this.cantidadMadera.setText(cantidadMadera);
+	}
+
+	public JLabel getCantidadHierro() {
+		return cantidadHierro;
+	}
+
+	public void setCantidadHierro(String cantidadHierro) {
+		this.cantidadHierro.setText(cantidadHierro);
+	}
+
+	public JLabel getCantidadComida() {
+		return cantidadComida;
+	}
+
+	public void setCantidadComida(String cantidadComida) {
+		this.cantidadComida.setText(cantidadComida);
+	}
+
+	public JLabel getCantidadMana() {
+		return cantidadMana;
+	}
+
+	public void setCantidadMana(String cantidadMana) {
+		this.cantidadMana.setText(cantidadMana);
+	}
+
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -85,6 +119,34 @@ public class Game extends JPanel {
 	public void iniciarSuperior() {
 		JPanel superior = new JPanel(new BorderLayout());
 		superior.setBackground(Color.LIGHT_GRAY);
+		
+		JPanel izquierdo = new JPanel();
+		izquierdo.setOpaque(false);
+		
+		// Materiales
+		agregarRecurso(izquierdo, "madera", 0, false, true, false);
+		agregarRecurso(izquierdo, "hierro", 1, false, true, false);
+		agregarRecurso(izquierdo, "comida", 0, false, false, true);
+		agregarRecurso(izquierdo, "mana", 1, false, false, true);
+		
+		// Edificios
+		agregarRecurso(izquierdo, "granja", 0, false, false, false);
+		agregarRecurso(izquierdo, "carpinteria", 1, false, false, false);
+		agregarRecurso(izquierdo, "herreria", 2, false, false, false);
+		agregarRecurso(izquierdo, "torremagica", 3, false, false, false);
+		agregarRecurso(izquierdo, "iglesia", 4, true, false, false);
+		
+		// Unidades
+		agregarRecurso(izquierdo, "espada",  0, true, false, false);
+		agregarRecurso(izquierdo, "lanza", 1, true, false, false);
+		agregarRecurso(izquierdo, "ballesta", 2, true, false, false);
+		agregarRecurso(izquierdo, "canon", 3, true, false, false);
+		agregarRecurso(izquierdo, "mago", 4, true, false, false);
+		agregarRecurso(izquierdo, "sacerdote", 5, true, false, false);
+		agregarRecurso(izquierdo, "torreflechas", 6, true, false, false);
+		agregarRecurso(izquierdo, "catapulta", 7, true, false, false);
+		agregarRecurso(izquierdo, "torrecohetes", 8, true, false, false);
+		
 		
 		JPanel derecho = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		derecho.setOpaque(false);
@@ -97,9 +159,6 @@ public class Game extends JPanel {
 		
 		derecho.add(proxima);
 		derecho.add(contador);
-		
-		JPanel izquierdo = new JPanel();
-		izquierdo.setOpaque(false);
 		
 		superior.add(izquierdo, BorderLayout.WEST);
 		superior.add(derecho, BorderLayout.EAST);
@@ -140,6 +199,50 @@ public class Game extends JPanel {
 	
 	public void actualizarContador(String tiempo) {
 		contador.setText(tiempo);
+	}
+	
+	public void agregarRecurso(JPanel recursos, String nombreImg, int indice, boolean esUnidad, boolean esResiduo, boolean esElemento) {
+		ImageIcon icono = new ImageIcon("./src/gui/" + nombreImg + ".png");
+		ImageIcon img = new ImageIcon(icono.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+		JLabel imagen = new JLabel(img);
+		
+		int valor = obtenerValor(indice, esUnidad, esResiduo, esElemento);
+		JLabel cantidad = new JLabel(String.valueOf(valor));
+		cantidad.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		
+		if (nombreImg.equals("madera")) {
+			cantidadMadera = cantidad;
+		} else if (nombreImg.equals("hierro")) {
+			cantidadHierro = cantidad;
+		} else if (nombreImg.equals("comida")) {
+			cantidadComida = cantidad;
+		} else if (nombreImg.equals("mana")) {
+			cantidadMana = cantidad;
+		}
+		
+		JPanel recurso = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+		recurso.setOpaque(false);
+		
+		recurso.add(imagen);
+		recurso.add(cantidad);
+		
+		recursos.add(recurso);
+	}
+	
+	public int obtenerValor(int indice, boolean esUnidad, boolean esResiduo, boolean esElemento) {
+		int valor = 0;
+		
+		if (esResiduo) {
+			valor = batallaActual.getWasteWoodIron()[indice];
+		} else if (esElemento) {
+			valor = batallaActual.getWasteFoodMana()[indice];
+		} else if (esUnidad) {
+			valor = batallaActual.getActualNumberUnitsCivilization()[indice];
+		} else {
+			valor = batallaActual.getActualNumberBuldingCivilization()[indice];
+		}
+		
+		return valor;
 	}
 	
 	public void pestañas(JPanel pestañas) {
