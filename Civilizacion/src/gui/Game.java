@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import game.Variables;
 import logic.Battle;
 
 public class Game extends JPanel {
@@ -251,89 +254,235 @@ public class Game extends JPanel {
 		
 		JPanel tab1 = new JPanel();
 		tab1.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesTropasO(tab1);
 		
 		JPanel tab2 = new JPanel();
 		tab2.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesTropasE(tab2);
 		
 		JPanel tab3 = new JPanel();
 		tab3.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesDefensas(tab3);
 		
 		JPanel tab4 = new JPanel();
 		tab4.setBackground(Color.LIGHT_GRAY);
-		agregarBotonesEdificios(tab4);
 		
-		tabs.addTab("TROPAS OFENSIVAS", tab1);
-		tabs.addTab("TROPAS ESPECIALES", tab2);
-		tabs.addTab("ESTRUCTURAS DEFENSIVAS", tab3);
-		tabs.addTab("EDIFICIOS", tab4);
+		tabs.addTab("TROPAS OFENSIVAS", contenidoPestñas("tropasO"));
+		tabs.addTab("TROPAS ESPECIALES", contenidoPestñas("tropasE"));
+		tabs.addTab("ESTRUCTURAS DEFENSIVAS", contenidoPestñas("defensas"));
+		tabs.addTab("EDIFICIOS", contenidoPestñas("edificios"));
 		
 		pestañas.add(tabs, BorderLayout.CENTER);
 	}
 	
-	public void agregarBotonesTropasO(JPanel tropas) {
+	public JPanel contenidoPestñas(String tipo) {
+		JPanel contenidoPestañas = new JPanel(new BorderLayout());
+		contenidoPestañas.setOpaque(false);
+		
+		JPanel botones = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		botones.setOpaque(false);
+		
+		JPanel costes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		costes.setOpaque(false);
+		costes.setPreferredSize(new Dimension(250, 50));
+		
+		if (tipo.equals("tropasO")) {
+			agregarBotonesTropasO(botones, costes);
+		} else if (tipo.equals("tropasE")) {
+			agregarBotonesTropasE(botones, costes);			
+		} else if (tipo.equals("defensas")) {
+			agregarBotonesDefensas(botones, costes);
+		} else if (tipo.equals("edificios")) {
+			agregarBotonesEdificios(botones, costes);
+		}
+		
+		contenidoPestañas.add(botones, BorderLayout.CENTER);
+		contenidoPestañas.add(costes, BorderLayout.EAST);
+		
+		return contenidoPestañas;
+	}
+	
+	public void agregarBotonesTropasO(JPanel botones, JPanel costes) {
 		ImageIcon iconEspadachin = new ImageIcon("./src/gui/espada.png");
 		JButton botonEspadachin = new JButton("Espadachin", iconEspadachin);
-		tropas.add(botonEspadachin);
+		costes(botones, costes, botonEspadachin, 
+				Variables.FOOD_COST_SWORDSMAN,
+				Variables.WOOD_COST_SWORDSMAN,
+				Variables.IRON_COST_SWORDSMAN,
+				Variables.MANA_COST_SWORDSMAN
+		);
 		
 		ImageIcon iconLancero = new ImageIcon("./src/gui/lanza.png");
 		JButton botonLancero = new JButton("Lancero", iconLancero);
-		tropas.add(botonLancero);
+		costes(botones, costes, botonLancero, 
+				Variables.FOOD_COST_SPEARMAN,
+				Variables.WOOD_COST_SPEARMAN,
+				Variables.IRON_COST_SPEARMAN,
+				Variables.MANA_COST_SPEARMAN
+		);
 		
 		ImageIcon iconBallesta = new ImageIcon("./src/gui/ballesta.png");
 		JButton botonBallesta = new JButton("Ballesta", iconBallesta);
-		tropas.add(botonBallesta);
+		costes(botones, costes, botonBallesta, 
+				Variables.FOOD_COST_CROSSBOW,
+				Variables.WOOD_COST_CROSSBOW,
+				Variables.IRON_COST_CROSSBOW,
+				Variables.MANA_COST_CROSSBOW
+		);
 		
 		ImageIcon iconCanon = new ImageIcon("./src/gui/canon.png");
 		JButton botonCanon = new JButton("Canon", iconCanon);
-		tropas.add(botonCanon);
+		costes(botones, costes, botonCanon, 
+				Variables.FOOD_COST_CANNON,
+				Variables.WOOD_COST_CANNON,
+				Variables.IRON_COST_CANNON,
+				Variables.MANA_COST_CANNON
+		);
 	}
 	
-	public void agregarBotonesTropasE(JPanel tropas) {		
+	public void agregarBotonesTropasE(JPanel botones, JPanel costes) {		
 		ImageIcon iconMago = new ImageIcon("./src/gui/mago.png");
 		JButton botonMago = new JButton("Mago", iconMago);
-		tropas.add(botonMago);
+		costes(botones, costes, botonMago, 
+				Variables.FOOD_COST_MAGICIAN,
+				Variables.WOOD_COST_MAGICIAN,
+				Variables.IRON_COST_MAGICIAN,
+				Variables.MANA_COST_MAGICIAN
+		);
 		
 		ImageIcon iconSacerdote = new ImageIcon("./src/gui/sacerdote.png");
 		JButton botonSacerdote = new JButton("Sacerdote", iconSacerdote);
-		tropas.add(botonSacerdote);
+		costes(botones, costes, botonSacerdote, 
+				Variables.FOOD_COST_PRIEST,
+				Variables.WOOD_COST_PRIEST,
+				Variables.IRON_COST_PRIEST,
+				Variables.MANA_COST_PRIEST
+		);
 	}
 	
-	public void agregarBotonesDefensas(JPanel defensas) {
+	public void agregarBotonesDefensas(JPanel botones, JPanel costes) {
 		ImageIcon iconTorreFlechas = new ImageIcon("./src/gui/torreflechas.png");
 		JButton botonTorreFlechas = new JButton("Torre de Flechas", iconTorreFlechas);
-		defensas.add(botonTorreFlechas);
+		costes(botones, costes, botonTorreFlechas, 
+				Variables.FOOD_COST_ARROWTOWER,
+				Variables.WOOD_COST_ARROWTOWER,
+				Variables.IRON_COST_ARROWTOWER,
+				Variables.MANA_COST_ARROWTOWER
+		);
 		
 		ImageIcon iconCatapulta = new ImageIcon("./src/gui/catapulta.png");
 		JButton botonCatapulta = new JButton("Catapulta", iconCatapulta);
-		defensas.add(botonCatapulta);
+		costes(botones, costes, botonCatapulta, 
+				Variables.FOOD_COST_CATAPULT,
+				Variables.WOOD_COST_CATAPULT,
+				Variables.IRON_COST_CATAPULT,
+				Variables.MANA_COST_CATAPULT
+		);
 		
 		ImageIcon iconTorreLanzaCohetes = new ImageIcon("./src/gui/torrecohetes.png");
 		JButton botonTorreLanzaCohetes = new JButton("Torre Lanza Cohetes", iconTorreLanzaCohetes);
-		defensas.add(botonTorreLanzaCohetes);
+		costes(botones, costes, botonTorreLanzaCohetes, 
+				Variables.FOOD_COST_ROCKETLAUNCHERTOWER,
+				Variables.WOOD_COST_ROCKETLAUNCHERTOWER,
+				Variables.IRON_COST_ROCKETLAUNCHERTOWER,
+				Variables.MANA_COST_ROCKETLAUNCHERTOWER
+		);
 	}
 	
-	public void agregarBotonesEdificios(JPanel edificios) {
+	public void agregarBotonesEdificios(JPanel botones, JPanel costes) {
 		ImageIcon iconGranja = new ImageIcon("./src/gui/granja.png");
 		JButton botonGranja = new JButton("Granja", iconGranja);
-		edificios.add(botonGranja);
+		costes(botones, costes, botonGranja, 
+				Variables.FOOD_COST_FARM,
+				Variables.WOOD_COST_FARM,
+				Variables.IRON_COST_FARM,
+				0
+		);
 		
 		ImageIcon iconCarpinteria = new ImageIcon("./src/gui/carpinteria.png");
 		JButton botonCarpinteria = new JButton("Carpinteria", iconCarpinteria);
-		edificios.add(botonCarpinteria);
+		costes(botones, costes, botonCarpinteria, 
+				Variables.FOOD_COST_CARPENTRY,
+				Variables.WOOD_COST_CARPENTRY,
+				Variables.IRON_COST_CARPENTRY,
+				0
+		);
 		
 		ImageIcon iconHerreria = new ImageIcon("./src/gui/herreria.png");
 		JButton botonHerreria = new JButton("Herreria", iconHerreria);
-		edificios.add(botonHerreria);
+		costes(botones, costes, botonHerreria, 
+				Variables.FOOD_COST_SMITHY,
+				Variables.WOOD_COST_SMITHY,
+				Variables.IRON_COST_SMITHY,
+				0
+		);
 		
 		ImageIcon iconTorreMagica = new ImageIcon("./src/gui/torremagica.png");
 		JButton botonTorreMagica = new JButton("Torre Mágica", iconTorreMagica);
-		edificios.add(botonTorreMagica);
+		costes(botones, costes, botonTorreMagica, 
+				Variables.FOOD_COST_MAGICTOWER,
+				Variables.WOOD_COST_MAGICTOWER,
+				Variables.IRON_COST_MAGICTOWER,
+				0
+		);
 		
 		ImageIcon iconIglesia = new ImageIcon("./src/gui/iglesia.png");
 		JButton botonIglesia = new JButton("Iglesia", iconIglesia);
-		edificios.add(botonIglesia);
+		costes(botones, costes, botonIglesia, 
+				Variables.FOOD_COST_CHURCH,
+				Variables.WOOD_COST_CHURCH,
+				Variables.IRON_COST_CHURCH,
+				0
+		);
+	}
+	
+	public void costes(JPanel botones, JPanel costes, JButton boton, int food, int wood, int iron, int mana) {
+		botones.add(boton);
+		
+		JPanel coste = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		coste.setOpaque(false);
+		coste.setVisible(false);
+		
+		if (food > 0) {
+			infoConten(coste, "comida", food);
+		}
+		
+		if (wood > 0) {
+			infoConten(coste, "madera", wood);
+		}
+		
+		if (iron > 0) {
+			infoConten(coste, "hierro", iron);
+		}
+		
+		if (mana > 0) {
+			infoConten(coste, "mana", mana);
+		}
+		
+		costes.add(coste);
+		
+		boton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				coste.setVisible(true);
+			}
+			
+			public void mouseExited(MouseEvent e ) {
+				coste.setVisible(false);
+			}
+		});
+	}
+	
+	public void infoConten(JPanel conten, String nombreImg, int valor) {
+		ImageIcon icono = new ImageIcon("./src/gui/" + nombreImg + ".png");
+		ImageIcon img = new ImageIcon(icono.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
+		JLabel imagen = new JLabel(img);	
+		
+		JLabel cantidad = new JLabel(String.valueOf(valor));
+		cantidad.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		
+		JPanel info = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		info.setOpaque(false);
+		
+		info.add(imagen);
+		info.add(cantidad);
+		
+		conten.add(info);
 	}
 }
