@@ -124,6 +124,18 @@ section{
     border-radius:10px;
 }
 
+.card-portada {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    margin: 20px 0;
+    width: 100%;
+    max-width: 450px;
+    transition: 0.4s;
+}
+
 .table-container{
     overflow-x:auto;
 }
