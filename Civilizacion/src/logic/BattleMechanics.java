@@ -120,7 +120,6 @@ public class BattleMechanics extends Battle implements Variables {
 
         if (total == 0) return -1;
 
-        // CAMBIO AQUÍ: Uso de Math.random()
         int numAleatorio = (int) (Math.random() * total) + 1;
 
         int acumulado = 0;

@@ -146,7 +146,7 @@ public class Civilization implements Variables{
     
 	
 	// Metodos Estructuras
-	void newChurch () throws ResourceException {
+	public void newChurch () throws ResourceException {
 		if (food < FOOD_COST_CHURCH || wood < WOOD_COST_CHURCH || iron < IRON_COST_CHURCH)  {
 			throw new ResourceException("No hay recursos suficientes para construir la iglesia");
 		}
@@ -158,7 +158,7 @@ public class Civilization implements Variables{
         church += 1;
 	}
 	
-	void newMagicTower () throws ResourceException {
+	public void newMagicTower () throws ResourceException {
 		if (food < FOOD_COST_MAGICTOWER || wood < WOOD_COST_MAGICTOWER || iron < IRON_COST_MAGICTOWER) {
             throw new ResourceException("No hay recursos suficientes para construir la Torre Mágica.");
         }
@@ -170,7 +170,7 @@ public class Civilization implements Variables{
         magicTower += 1;
 	}
 	
-	void newFarm () throws ResourceException {
+	public void newFarm () throws ResourceException {
 		if (food < FOOD_COST_FARM || wood < WOOD_COST_FARM || iron < IRON_COST_FARM) {
 			throw new ResourceException("No hay recursos suficientes para construir la granja");
 		}
@@ -222,7 +222,7 @@ public class Civilization implements Variables{
 		technologyDefense += 1;
 	}
 	
-	void upgradeTechnologyAttack () throws ResourceException{
+	public void upgradeTechnologyAttack () throws ResourceException{
 		int cost = UPGRADE_BASE_ATTACK_TECHNOLOGY_IRON_COST
 				+ (technologyAtack * UPGRADE_PLUS_ATTACK_TECHNOLOGY_IRON_COST);
 		
@@ -236,7 +236,7 @@ public class Civilization implements Variables{
 	
 	// Unidades
 	
-	void newSwordsman (int n) throws ResourceException {
+	public void newSwordsman (int n) throws ResourceException {
 		int count = 0;
 
 	    for (int i = 0; i < n; i += 1) {
@@ -260,7 +260,7 @@ public class Civilization implements Variables{
 	    }		
 	}
 	
-	void newSpearman (int n) throws ResourceException {
+	public void newSpearman (int n) throws ResourceException {
 		int count = 0;
 		for (int i =0; i < n; i +=1) {
 			if (food >= FOOD_COST_SPEARMAN && wood >= WOOD_COST_SPEARMAN && iron >= IRON_COST_SPEARMAN) {
@@ -278,7 +278,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newCrossbow(int n) throws ResourceException {
+	public void newCrossbow(int n) throws ResourceException {
 		int count = 0;
 	    for (int i = 0; i < n; i += 1) {
 	        if (wood >= WOOD_COST_CROSSBOW && iron >= IRON_COST_CROSSBOW) {
@@ -295,7 +295,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newCannon(int n) throws ResourceException {
+	public void newCannon(int n) throws ResourceException {
 		int count = 0;
 	    for (int i = 0; i < n; i += 1) {
 	        if (wood >= WOOD_COST_CANNON && iron >= IRON_COST_CANNON) {
@@ -312,7 +312,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newArrowTower(int n) throws ResourceException {
+	public void newArrowTower(int n) throws ResourceException {
 		int count = 0;
 	    for (int i = 0; i < n; i += 1) {
 	        if (wood >= WOOD_COST_ARROWTOWER && iron >= IRON_COST_ARROWTOWER) {
@@ -329,7 +329,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newCatapult(int n) throws ResourceException {
+	public void newCatapult(int n) throws ResourceException {
 		int count = 0;
 	    for (int i = 0; i < n; i += 1) {
 	        if (wood >= WOOD_COST_CATAPULT && iron >= IRON_COST_CATAPULT) {
@@ -346,7 +346,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newRocketLauncher(int n) throws ResourceException {
+	public void newRocketLauncher(int n) throws ResourceException {
 		int count = 0;
 	    for (int i = 0; i < n; i += 1) {
 	        if (wood >= WOOD_COST_ROCKETLAUNCHERTOWER && iron >= IRON_COST_ROCKETLAUNCHERTOWER) {
@@ -363,7 +363,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newMagician(int n) throws ResourceException, BuildingException {
+	public void newMagician(int n) throws ResourceException, BuildingException {
 		if (magicTower < 1) {
 	        throw new BuildingException("Necesitas al menos una Torre Mágica para crear Magos.");
 	    }
@@ -385,7 +385,7 @@ public class Civilization implements Variables{
 	    }
 	}
 	
-	void newPriest(int n) throws ResourceException, BuildingException {
+	public void newPriest(int n) throws ResourceException, BuildingException {
 		if (church < 1) {
 	        throw new BuildingException("Necesitas al menos una Iglesia para crear Sacerdotes.");
 	    }
