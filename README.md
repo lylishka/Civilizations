@@ -92,7 +92,7 @@ Primero accede a la carpeta y luego ejecuta los comandos seguún necesites:
 <br>
 
 ### Ejecución del Juego
-El código principal del juego se encuentra en la carpeta `M3` del repositorio. Para iniciarlo, ejecuta el archivo `app.py`:
+El código principal del juego se encuentra en la carpeta `M3` del repositorio:
 
    ```bash
    
