@@ -62,7 +62,7 @@ Localiza el archivo **`proxmox/config.env`** y editalo con tus credenciales:
    DEFAULT_SERVER_PORT="3000"
    ```
 
-**Importante(solo Windows)**: Ejecuta esto en la terminal de Linux  para corregir permisos y formatos:
+**Importante (solo Windows)**: Ejecuta esto en la terminal de Linux  para corregir permisos y formatos:
    ```bash
    cd ~/nodejs_server/proxmox/
    chmod +x *.sh
