@@ -43,6 +43,12 @@ public class Game extends JPanel {
 	private ArrayList<ElementoVisual> elementosEnPantalla = new ArrayList<>();
 	private Civilization miCivilization;
 	
+	private static final int ZONA_X_MIN = 300;
+	private static final int ZONA_X_MAX = 1100;
+	private static final int ZONA_Y_MIN = 120;
+	private static final int ZONA_Y_MAX = 580;
+	private static final int SPRITE_SIZE = 55;
+	
 	public Game(String nombreCivilizacion, Battle batallaActual) {
 		this.nombreCivilizacion = nombreCivilizacion;
 		this.batallaActual = batallaActual;
@@ -215,25 +221,45 @@ public class Game extends JPanel {
 		contador.setText(tiempo);
 	}
 	
-	// MÉTODO DE GENERACIÓN ALEATORIA CON MATH.RANDOM
+	// MÉTODO DE GENERACIÓN ALEATORIA
 	public void añadirElementos(String rutaImagen) {
-		int margenMinX = 60;
-		int margenMaxX = getWidth() - 120;
-		int margenMinY = 120;               
-		int margenMaxY = getHeight() - 260; 
+		int x;
+		int y;
+		int intentos = 0;
 		
-		int x = margenMinX;
-		int y = margenMinY;
-		
-		if (margenMaxX > margenMinX) {
-			x = margenMinX + (int) (Math.random() * (margenMaxX - margenMinX + 1));
-		}
-		if (margenMaxY > margenMinY) {
-			y = margenMinY + (int) (Math.random() * (margenMaxY - margenMinY + 1));
-		}
+		 do {
+		        x = ZONA_X_MIN + (int)(Math.random() * (ZONA_X_MAX - ZONA_X_MIN));
+		        y = ZONA_Y_MIN + (int)(Math.random() * (ZONA_Y_MAX - ZONA_Y_MIN));
+		        intentos++;
+		        if (intentos > 500) {
+		            JOptionPane.showMessageDialog(this, "No hay espacio libre.", "Mapa lleno", JOptionPane.WARNING_MESSAGE);
+		            return;
+		        }
+		    } while (hayColision(x, y));
 
-		elementosEnPantalla.add(new ElementoVisual(rutaImagen, x, y));
+
+		elementosEnPantalla.add(new ElementoVisual(rutaImagen, x, y, intentos));
 		repaint();
+	}
+	// Saber si hay colicion
+	private boolean hayColision(int x, int y) {
+	    for (ElementoVisual elem : elementosEnPantalla) {
+	        int distanciaX = elem.getX() - x;
+	        int distanciaY = elem.getY() - y;
+	        double distancia = Math.sqrt(distanciaX * distanciaX + distanciaY * distanciaY);
+	        if (distancia < SPRITE_SIZE) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	public void guardarPosicion(int indice) {
+		if (!elementosEnPantalla.isEmpty()) {
+			ElementoVisual ultimo = elementosEnPantalla.get(elementosEnPantalla.size() - 1);
+	        batallaActual.getPositions()[indice][0] = ultimo.getX();
+	        batallaActual.getPositions()[indice][1] = ultimo.getY();
+		}
 	}
 	
 	public void agregarRecurso(JPanel recursos, String nombreImg, int indice, boolean esUnidad, boolean esResiduo, boolean esElemento) {
@@ -325,6 +351,7 @@ public class Game extends JPanel {
 		botonEspadachin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/espada.png");
+				guardarPosicion(0);
 			}
 		});
 		costes(botones, costes, botonEspadachin, 
@@ -339,6 +366,7 @@ public class Game extends JPanel {
 		botonLancero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/lanza.png");
+				guardarPosicion(1);
 			}
 		});
 		costes(botones, costes, botonLancero, 
@@ -353,6 +381,7 @@ public class Game extends JPanel {
 		botonBallesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/ballesta.png");
+				guardarPosicion(2);
 			}
 		});
 		costes(botones, costes, botonBallesta, 
@@ -367,6 +396,7 @@ public class Game extends JPanel {
 		botonCanon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/canon.png");
+				guardarPosicion(3);
 			}
 		});
 		costes(botones, costes, botonCanon, 
@@ -383,6 +413,7 @@ public class Game extends JPanel {
 		botonMago.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/mago.png");
+				guardarPosicion(7);
 			}
 		});
 		costes(botones, costes, botonMago, 
@@ -397,6 +428,7 @@ public class Game extends JPanel {
 		botonSacerdote.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/sacerdote.png");
+				guardarPosicion(8);
 			}
 		});
 		costes(botones, costes, botonSacerdote, 
@@ -413,6 +445,8 @@ public class Game extends JPanel {
 		botonTorreFlechas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/torreflechas.png");
+				guardarPosicion(4);
+
 			}
 		});
 		costes(botones, costes, botonTorreFlechas, 
@@ -427,6 +461,8 @@ public class Game extends JPanel {
 		botonCatapulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/catapulta.png");
+				guardarPosicion(5);
+
 			}
 		});
 		costes(botones, costes, botonCatapulta, 
@@ -441,6 +477,8 @@ public class Game extends JPanel {
 		botonTorreLanzaCohetes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/torrecohetes.png");
+				guardarPosicion(6);
+
 			}
 		});
 		costes(botones, costes, botonTorreLanzaCohetes, 
@@ -457,6 +495,7 @@ public class Game extends JPanel {
 		botonGranja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/granja.png");
+				guardarPosicion(9);
 			}
 		});
 		costes(botones, costes, botonGranja, 
@@ -471,6 +510,7 @@ public class Game extends JPanel {
 		botonCarpinteria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/carpinteria.png");
+				guardarPosicion(10);
 			}
 		});
 		costes(botones, costes, botonCarpinteria, 
@@ -485,6 +525,7 @@ public class Game extends JPanel {
 		botonHerreria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/herreria.png");
+				guardarPosicion(11);
 			}
 		});
 		costes(botones, costes, botonHerreria, 
@@ -499,6 +540,7 @@ public class Game extends JPanel {
 		botonTorreMagica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/torremagica.png");
+				guardarPosicion(12);
 			}
 		});
 		costes(botones, costes, botonTorreMagica, 
@@ -513,6 +555,7 @@ public class Game extends JPanel {
 		botonIglesia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadirElementos("./src/gui/iglesia.png");
+				guardarPosicion(13);
 			}
 		});
 		costes(botones, costes, botonIglesia, 
@@ -581,8 +624,9 @@ class ElementoVisual {
 	private BufferedImage imagen;
 	private int x;
 	private int y;
+	private int tipo;
 	
-	public ElementoVisual(String rutaImagen, int x, int y) {
+	public ElementoVisual(String rutaImagen, int x, int y, int tipo) {
 		try {
 			this.imagen = ImageIO.read(new File(rutaImagen));
 		} catch (IOException e) {
@@ -590,7 +634,12 @@ class ElementoVisual {
 		}
 		this.x = x;
 		this.y = y;
+		this.tipo = tipo;
 	}
+	
+	public int getTipo() { return tipo; }
+	public int getX() { return x; }
+    public int getY() { return y; }
 	
 	public void dibujar(Graphics2D g2d) {
 		if (imagen != null) {
