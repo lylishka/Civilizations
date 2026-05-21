@@ -95,7 +95,7 @@ Primero accede a la carpeta y luego ejecuta los comandos seguún necesites:
 El código principal del juego se encuentra en la carpeta `M3` del repositorio. Para iniciarlo, ejecuta el archivo `app.py`:
 
    ```bash
-   python3 ~/ruta_al_archivo/M3/app.py
+   
    ```
 
 ---
