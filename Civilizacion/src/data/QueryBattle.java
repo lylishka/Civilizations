@@ -32,6 +32,8 @@ public class QueryBattle {
             saveCivilizationDefenseStats(battle, civilizationId, numBattle);
             saveCivilizationSpecialStats(battle, civilizationId, numBattle);
             saveEnemyAttackStats(battle, civilizationId, numBattle);
+            saveBuldings(battle, civilizationId);
+            
         } catch (SQLException e) {
             System.out.println("Error al guardar batalla: " + e.getMessage());
         }
@@ -174,5 +176,56 @@ public class QueryBattle {
             ps.executeUpdate();
         }
         System.out.println("Enemy stats guardadas");
+    }
+    
+    public void saveBuldings(Battle battle, int civilizationId) throws SQLException {
+    	String sqlDelete = "DELETE FROM building WHERE civilization_id = ?";
+    	PreparedStatement psDelete = conn.prepareStatement(sqlDelete);
+    	psDelete.setInt(1, civilizationId);
+    	psDelete.executeUpdate();
+    	
+    	String sqlInsert = "INSERT INTO building (civilization_id, type, posX, posY) VALUES (?, ?, ?, ?)";
+    	PreparedStatement psInsert = conn.prepareStatement(sqlInsert);
+    	
+    	String[] types = {"Farm", "Carpentry", "Smithy", "MagicTower", "Church"};
+		QueryGui queryGui = new QueryGui();
+    	
+    	for (int i = 0; i < 5; i++) {
+    		int cantidad = battle.getActualNumberBuldingCivilization()[i];
+    		int index = queryGui.getIndice(types[i]);
+    		
+    		if (cantidad > 0 && index != -1) {
+    			psInsert.setInt(1, civilizationId);
+    			psInsert.setString(2, types[i]);
+    			psInsert.setInt(3, battle.getPositions()[index][0]);
+    			psInsert.setInt(4, battle.getPositions()[index][1]);
+    			psInsert.executeUpdate();
+    		}
+        }
+    	
+        System.out.println("Edificios guardadas");
+    }
+    
+    public void updateCivilizationsStats(int idCivilizacion, Battle battle) throws SQLException {
+    	String sql = "UPDATE civilizacion_stats SET "
+    			+ "wood_amount = ?, iron_amount = ?, food_amount = ?, mana_amount = ?, "
+    			+ "magicTower_counter = ?, church_counter = ?, smithy_counter = ?, farm_counter = ?, carpentry_counter = ? "
+    			+ "WHERE civilization_id = ?";
+    	
+    	PreparedStatement ps = conn.prepareStatement(sql);
+    	
+    	ps.setInt(1, battle.getWasteWoodIron()[0]);
+    	ps.setInt(2, battle.getWasteWoodIron()[1]);
+    	ps.setInt(3, battle.getWasteFoodMana()[0]);
+    	ps.setInt(4, battle.getWasteFoodMana()[1]);
+    	ps.setInt(5, battle.getActualNumberBuldingCivilization()[3]);
+    	ps.setInt(6, battle.getActualNumberBuldingCivilization()[4]);
+    	ps.setInt(7, battle.getActualNumberBuldingCivilization()[2]);
+    	ps.setInt(8, battle.getActualNumberBuldingCivilization()[0]);
+    	ps.setInt(9, battle.getActualNumberBuldingCivilization()[1]);
+    	ps.setInt(10, idCivilizacion);
+    	
+    	ps.executeUpdate();
+    	
     }
 }

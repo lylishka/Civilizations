@@ -44,6 +44,9 @@ public class Battle implements Variables {
 	
 	// Cantidad de edificios actuales:
 	private int[] actualNumberBuldingCivilization; // Farm, Carpentry, Smithy, MagicTower, Church
+	
+	// Posiciones
+	private int[][] positions; // Swordsman, Spearman, Crossbow, Cannon, ArrowTower, Catapult, RocketLauncherTower, Magician, Priest, Farm, Carpentry, Smithy, MagicTower, Church 
 		
 	public Battle(ArrayList<MilitaryUnit> civilizationArmy, ArrayList<MilitaryUnit> enemyArmy) {
 		super();
@@ -67,7 +70,8 @@ public class Battle implements Variables {
 		this.wasteFoodMana = new int[2];
 		this.actualNumberUnitsCivilization = new int[9];
 		this.actualNumberUnitsEnemy = new int[9];
-		this.actualNumberBuldingCivilization = new int[5];	
+		this.actualNumberBuldingCivilization = new int[5];
+		this.positions = new int[14][2];
 	}
 
 	public ArrayList<game.MilitaryUnit> getCivilizationArmy() {
@@ -196,5 +200,13 @@ public class Battle implements Variables {
 
 		public void setWasteFoodMana(int[] wasteFoodMana) {
 			this.wasteFoodMana = wasteFoodMana;
+		}
+
+		public int[][] getPositions() {
+			return positions;
+		}
+
+		public void setPositions(int[][] positions) {
+			this.positions = positions;
 		}	
 }

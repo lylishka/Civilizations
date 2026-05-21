@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -178,6 +179,12 @@ public class MainWindow extends JFrame {
 		if (idCivilizacion != -1) {
 			QueryBattle queryBattle = new QueryBattle();
 			queryBattle.saveBattle(batalla, idCivilizacion, "Ninguno");
+			
+			try {
+				queryBattle.updateCivilizationsStats(idCivilizacion, batalla);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		} else {
 			System.out.println("No se guardo la Batalla");
 		}

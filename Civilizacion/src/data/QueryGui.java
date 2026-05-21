@@ -74,8 +74,7 @@ public class QueryGui {
 	}
 	
 	public boolean encontrarCivilizacion(String nombreCivilizacion) {
-		String queryCheck = "SELECT civilization_id, name FROM civilizacion_stats WHERE name = ?";
-		String queryBattle = "SELECT wood_acquired, iron_acquired FROM battle_stats WHERE civilization_id = ?";
+		String queryCheck = "SELECT * FROM civilizacion_stats WHERE name = ?";
 		
 		try {
 			connection.conectar();
@@ -83,30 +82,32 @@ public class QueryGui {
 			
 			PreparedStatement psCheck = conn.prepareStatement(queryCheck);
 			psCheck.setString(1, nombreCivilizacion);
+			ResultSet rsCivilizacion = psCheck.executeQuery();
 			
-			ResultSet rsName = psCheck.executeQuery();
-			
-			if (rsName.next()) {
-				int idCivilization = rsName.getInt("civilization_id");
+			if (rsCivilizacion.next()) {
+				int idCivilization = rsCivilizacion.getInt("civilization_id");
 				
-				PreparedStatement psBatalla = conn.prepareStatement(queryBattle);
-				psBatalla.setInt(1, idCivilization);
-				ResultSet rsBatalla = psBatalla.executeQuery();
+				batallaActual = new Battle(new ArrayList<MilitaryUnit>(), new ArrayList<MilitaryUnit>());
 				
-				ArrayList<MilitaryUnit> tropasCivilizacion = new ArrayList<MilitaryUnit>();
-				ArrayList<MilitaryUnit> tropasEnemigos = new ArrayList<MilitaryUnit>();
+				batallaActual.getWasteWoodIron()[0] = rsCivilizacion.getInt("wood_amount");
+				batallaActual.getWasteWoodIron()[1] = rsCivilizacion.getInt("iron_amount");
+				batallaActual.getWasteFoodMana()[0] = rsCivilizacion.getInt("food_amount");
+				batallaActual.getWasteFoodMana()[1] = rsCivilizacion.getInt("mana_amount");
 				
+				int[] edificios = new int[5];
+				edificios[0] = rsCivilizacion.getInt("farm_counter");
+				edificios[1] = rsCivilizacion.getInt("carpentry_counter");
+				edificios[2] = rsCivilizacion.getInt("smithy_counter");
+				edificios[3] = rsCivilizacion.getInt("magicTower_counter");
+				edificios[4] = rsCivilizacion.getInt("church_counter");
+				batallaActual.setActualNumberBuldingCivilization(edificios);
 				
-				if (rsBatalla.next()) {
-					int madera = rsBatalla.getInt("wood_acquired");
-					int hierro = rsBatalla.getInt("iron_acquired");
-					
-					this.batallaActual = new Battle(tropasCivilizacion, tropasEnemigos);
-					
-					int[] recursos = {madera, hierro};
-					this.batallaActual.getWasteWoodIron()[0] = madera;
-					this.batallaActual.getWasteWoodIron()[1] = hierro;
-				}
+				int[][] pos = new int[14][2];
+				posiciones(idCivilization, pos, "building", "type");
+				posiciones(idCivilization, pos, "civilization_attack_stats", "type");
+				posiciones(idCivilization, pos, "civilization_defense_stats", "type");
+				posiciones(idCivilization, pos, "civilization_special_stats", "type");
+				this.batallaActual.setPositions(pos);				
 				
 				return true;
 			} else {
@@ -205,5 +206,59 @@ public class QueryGui {
 		}
 		
 		return cantidad;
+	}
+	
+	public void posiciones(int idCivilizacion, int[][] pos, String tabla, String columna) throws SQLException {
+		String query = "SELECT " + columna + ", posX, posY FROM " + tabla + " WHERE civilization_id = ?";
+		
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setInt(1, idCivilizacion);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			int indice = getIndice(rs.getString(columna));
+			if (indice != -1) {
+				pos[indice][0] = rs.getInt("posX");
+				pos[indice][1] = rs.getInt("posY");
+			}
+		}
+	}
+	
+	public int getIndice(String tipo) {
+		int index;
+		
+		switch (tipo) {
+		case "Swordsman": index = 0;
+			break;
+		case "Spearman": index = 1;
+			break;
+		case "Crossbow": index = 2;
+			break;
+		case "Cannon": index = 3;
+			break;
+		case "ArrowTower": index = 4;
+			break;
+		case "Catapult": index = 5;
+			break;
+		case "RocketLauncherTower": index = 6;
+			break;
+		case "Magician": index = 7;
+			break;
+		case "Priest": index = 8;
+			break;
+		case "Farm": index = 9;
+			break;
+		case "Carpentry": index = 10;
+			break;
+		case "Smithy": index = 11;
+			break;
+		case "MagicTower": index = 12;
+			break;
+		case "Church": index = 13;
+			break;
+		default: index = -1;
+		}
+		
+		return index;
 	}
 }
