@@ -93,7 +93,6 @@ CREATE TABLE battle_stats (
     civilization_id INT NOT NULL,
     wood_acquired INT DEFAULT 0,
     iron_acquired INT DEFAULT 0,
-    winner VARCHAR(100) NOT NULL,
     battle_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id)
 );
@@ -110,6 +109,7 @@ CREATE TABLE battle_log (
 	num_line INT AUTO_INCREMENT PRIMARY KEY,
     civilization_id INT NOT NULL,
     num_battle INT NOT NULL,
+    winner VARCHAR(100) NOT NULL,
     log_entry TEXT,
     FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id),
     FOREIGN KEY (num_battle) REFERENCES battle_stats(num_battle)
@@ -129,6 +129,8 @@ CREATE TABLE civilization_attack_stats (
     num_battle INT NOT NULL,
     initial INT DEFAULT 0,
     drops INT DEFAULT 0,
+    posX INT DEFAULT 0,
+    posY INT DEFAULT 0,
     PRIMARY KEY (type, civilization_id, num_battle),
     FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id),
     FOREIGN KEY (num_battle) REFERENCES battle_stats(num_battle)
@@ -148,6 +150,8 @@ CREATE TABLE civilization_defense_stats (
     num_battle INT NOT NULL,
     initial INT DEFAULT 0,
     drops INT DEFAULT 0,
+    posX INT DEFAULT 0,
+    posY INT DEFAULT 0,
     PRIMARY KEY (type, civilization_id, num_battle),
     FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id),
     FOREIGN KEY (num_battle) REFERENCES battle_stats(num_battle)
@@ -167,6 +171,8 @@ CREATE TABLE civilization_special_stats (
     num_battle INT NOT NULL,
     initial INT DEFAULT 0,
     drops INT DEFAULT 0,
+    posX INT DEFAULT 0,
+    posY INT DEFAULT 0,
     PRIMARY KEY (type, civilization_id, num_battle),
     FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id),
     FOREIGN KEY (num_battle) REFERENCES battle_stats(num_battle)
@@ -189,4 +195,21 @@ CREATE TABLE enemy_attack_stats (
     PRIMARY KEY (type, civilization_id, num_battle),
     FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id),
     FOREIGN KEY (num_battle) REFERENCES battle_stats(num_battle)
+);
+
+
+
+/*
+=================================
+ TABLA building
+=================================
+*/
+
+CREATE TABLE building (
+	bulding_id INT AUTO_INCREMENT PRIMARY KEY,
+    civilization_id INT NOT NULL,
+	type ENUM('MagicTower','Church', 'Farm', 'Smithy', 'Carpentry'),
+    posX INT DEFAULT 0,
+    posY INT DEFAULT 0,
+    FOREIGN KEY (civilization_id) REFERENCES civilizacion_stats(civilization_id)
 );
