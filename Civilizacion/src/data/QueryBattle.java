@@ -88,22 +88,28 @@ public class QueryBattle {
     
     public void saveCivilizationAttackStats(Battle battle, int civilizationId, int numBattle) throws SQLException {
         String sql = "INSERT INTO civilization_attack_stats " +
-                     "(type, civilization_id, num_battle, initial, drops) " +
-                     "VALUES (?,?,?,?,?)";
+                     "(type, civilization_id, num_battle, initial, drops, posX, posY) " +
+                     "VALUES (?,?,?,?,?,?,?)";
 
         // Mismo orden que el ENUM de la BD
         String[] types = {"Swordsman", "Spearman", "Crossbow", "Cannon"};
 
         PreparedStatement ps = conn.prepareStatement(sql);
-
+        
+        QueryGui queryGui = new QueryGui();
+        
         // initialArmies[0][0..3] = unidades iniciales de nuestra civilización
         // civilizationDrops[0..3] = unidades perdidas de nuestra civilización
         for (int i = 0; i <= 3; i++) {
+        	int index = queryGui.getIndice(types[i]);
+        	
             ps.setString(1, types[i]);
             ps.setInt(2,   	civilizationId);
             ps.setInt(3,    numBattle);
             ps.setInt(4,    battle.getInitialArmies()[0][i]);     // cuántas había al inicio
             ps.setInt(5,    0);   // cuántas murieron
+            ps.setInt(6, battle.getPositions()[index][0]);
+            ps.setInt(7, battle.getPositions()[index][1]);
             ps.executeUpdate();
         }
         System.out.println("Civilization attack stats guardadas");
@@ -111,22 +117,28 @@ public class QueryBattle {
     
     public void saveCivilizationDefenseStats(Battle battle, int civilizationId, int numBattle) throws SQLException {
         String sql = "INSERT INTO civilization_defense_stats " +
-                     "(type, civilization_id, num_battle, initial, drops) " +
-                     "VALUES (?,?,?,?,?)";
+                     "(type, civilization_id, num_battle, initial, drops, posX, posY) " +
+                     "VALUES (?,?,?,?,?,?,?)";
 
         // Mismo orden que el ENUM de la BD
         String[] types = {"ArrowTower", "Catapult", "RocketLauncherTower"};
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
+        QueryGui queryGui = new QueryGui();
+        
         // initialArmies[0][4..6] = unidades defensivas iniciales de nuestra civilización
         // civilizationDrops[4..6] = unidades defensivas perdidas
         for (int i = 4; i <= 6; i++) {
+        	int index = queryGui.getIndice(types[i]);
+        	
             ps.setString(1, types[i - 4]); // i-4 porque types[0]=ArrowTower
             ps.setInt(2,    civilizationId);
             ps.setInt(3,    numBattle);
             ps.setInt(4,    battle.getInitialArmies()[0][i]);
             ps.setInt(5,    0);
+            ps.setInt(6, battle.getPositions()[index][0]);
+            ps.setInt(7, battle.getPositions()[index][1]);
             ps.executeUpdate();
         }
         System.out.println("Civilization defense stats guardadas");
@@ -134,22 +146,28 @@ public class QueryBattle {
     
     public void saveCivilizationSpecialStats(Battle battle, int civilizationId, int numBattle) throws SQLException {
         String sql = "INSERT INTO civilization_special_stats " +
-                     "(type, civilization_id, num_battle, initial, drops) " +
-                     "VALUES (?,?,?,?,?)";
+                     "(type, civilization_id, num_battle, initial, drops, posX, posY) " +
+                     "VALUES (?,?,?,?,?,?,?)";
 
         // Mismo orden que el ENUM de la BD
         String[] types = {"Magician", "Priest"};
 
         PreparedStatement ps = conn.prepareStatement(sql);
+        
+        QueryGui queryGui = new QueryGui();
 
         // initialArmies[0][7..8] = unidades especiales iniciales de nuestra civilización
         // civilizationDrops[7..8] = unidades especiales perdidas
         for (int i = 7; i <= 8; i++) {
+        	int index = queryGui.getIndice(types[i]);
+        	
             ps.setString(1, types[i - 7]); // i-7 porque types[0]=Magician
             ps.setInt(2,    civilizationId);
             ps.setInt(3,    numBattle);
             ps.setInt(4,    battle.getInitialArmies()[0][i]);
             ps.setInt(5,    0);
+            ps.setInt(6, battle.getPositions()[index][0]);
+            ps.setInt(7, battle.getPositions()[index][1]);
             ps.executeUpdate();
         }
         System.out.println("Civilization special stats guardadas");

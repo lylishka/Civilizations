@@ -173,7 +173,7 @@ public class QueryGui {
 		
 		String query;
 		if (esTipo) {
-			query = "SELECT initial FROM " + tabla + "WHERE num_battle = ? AND civilization_id = ? AND type = ? AND num_battle = ?";
+			query = "SELECT initial FROM " + tabla + " WHERE num_battle = ? AND civilization_id = ? AND type = ? AND num_battle = ?";
 		} else {
 			query = "SELECT " + columna + " FROM " + tabla + " WHERE civilization_id = ?";
 		}
