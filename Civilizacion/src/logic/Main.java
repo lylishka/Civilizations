@@ -45,7 +45,7 @@ public class Main {
 						window.getGame().actualizarContador(tiempo);
 						
 						++segundosRecursos;
-						if (segundosRecursos >= 60) {
+						if (segundosRecursos >= 30) {
 							aumentarRecursos(window);
 							segundosRecursos = 0;
 						}

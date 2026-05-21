@@ -130,7 +130,7 @@ public class QueryBattle {
         // initialArmies[0][4..6] = unidades defensivas iniciales de nuestra civilización
         // civilizationDrops[4..6] = unidades defensivas perdidas
         for (int i = 4; i <= 6; i++) {
-        	int index = queryGui.getIndice(types[i]);
+        	int index = queryGui.getIndice(types[i - 4]);
         	
             ps.setString(1, types[i - 4]); // i-4 porque types[0]=ArrowTower
             ps.setInt(2,    civilizationId);
@@ -159,7 +159,7 @@ public class QueryBattle {
         // initialArmies[0][7..8] = unidades especiales iniciales de nuestra civilización
         // civilizationDrops[7..8] = unidades especiales perdidas
         for (int i = 7; i <= 8; i++) {
-        	int index = queryGui.getIndice(types[i]);
+        	int index = queryGui.getIndice(types[i - 7]);
         	
             ps.setString(1, types[i - 7]); // i-7 porque types[0]=Magician
             ps.setInt(2,    civilizationId);
