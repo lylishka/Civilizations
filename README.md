@@ -89,13 +89,3 @@ Primero accede a la carpeta y luego ejecuta los comandos seguún necesites:
    # Detener el túnel
    ./proxmoxTunelStop.sh
    ```
-<br>
-
-### Ejecución del Juego
-El código principal del juego se encuentra en la carpeta `M3` del repositorio:
-
-   ```bash
-   
-   ```
-
----
