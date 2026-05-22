@@ -23,21 +23,36 @@ public class Main {
 				
 				private int segundosRestantes = 180;	
 				private int segundosRecursos = 0;
+				private int numBatalla = 1;
+				private int segundosPausa = -1;
 
 				public void run() {
 					if (window.isJugando()) {
+						
+						// Pausa del contador
+						if (segundosPausa >= 0) {
+							segundosPausa--;
+							if (segundosPausa < 0) {
+								window.getGame().resolverBatalla(numBatalla);
+								numBatalla++;
+								segundosRestantes = 180;
+							}
+							
+							return;
+						}
+						
 						if (window.getGame().isSiguienteBatalla()) {
 							segundosRestantes = 0;
 							window.getGame().setSiguienteBatalla(false);
 						} 
 						
 						if (segundosRestantes <= 0) {
-							window.getGame().ejecutarBatalla(1);
-							segundosRestantes = 180;
+							window.getGame().ejecutarBatalla(numBatalla);
+							segundosPausa = 5;
 						} else {
 							--segundosRestantes;
 						}
-						//
+						// 
 						
 						int minutos = segundosRestantes / 60;
 						int segundos = segundosRestantes % 60;

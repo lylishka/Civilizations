@@ -69,6 +69,7 @@ public class Game extends JPanel {
 		
 		iniciarSuperior();
 		iniciarInferior();
+		restaurarElementos();
 	}
 	
 	public boolean isSiguienteBatalla() {
@@ -615,6 +616,11 @@ public class Game extends JPanel {
 		
 		mecanicas.generarEnemigo(numBatalla);
 		
+		int espadachines = ((ArrayList) mecanicas.getArmies()[1].get(0)).size();
+	    int lanceros     = ((ArrayList) mecanicas.getArmies()[1].get(1)).size();
+	    int ballestas    = ((ArrayList) mecanicas.getArmies()[1].get(2)).size();
+	    int canones      = ((ArrayList) mecanicas.getArmies()[1].get(3)).size();
+		
 		int[] enemios = mecanicas.getActualNumberUnitsEnemy();
 		for (int i = 0; i < enemios[0]; i++) {
 			añadirElementos("./src/gui/espada.png");
@@ -630,28 +636,67 @@ public class Game extends JPanel {
 		}
 		
 		repaint();
+	}
+	public void resolverBatalla(int numBatalla) {
+		BattleMechanics mecanicas = (BattleMechanics) batallaActual;
 		
-		// Pausa para poder ver a los enemigos
-		javax.swing.Timer pausa = new javax.swing.Timer(3000, new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				mecanicas.executeBattle();
-				
-				setCantidadMadera(String.valueOf(batallaActual.getWasteWoodIron()[0]));
-				setCantidadMadera(String.valueOf(batallaActual.getWasteWoodIron()[1]));
-				setCantidadComida(String.valueOf(batallaActual.getWasteFoodMana()[0]));
-				setCantidadMana(String.valueOf(batallaActual.getWasteFoodMana()[1]));
-				
-				String reporte = mecanicas.getBattleReport(numBatalla);
-				JOptionPane.showMessageDialog(Game.this, reporte, "Resultado de la Batalla", JOptionPane.INFORMATION_MESSAGE);
-				
-				repaint();
-				
+		boolean ganamos = mecanicas.executeBattle();
+		
+		elementosEnPantalla = new ArrayList<>();
+		
+		int[] cantidades = batallaActual.getActualNumberUnitsCivilization();
+		for (int i = 0; i < 9; i++) {
+			 int sobrevivientes = ((ArrayList) mecanicas.getArmies()[0].get(i)).size();
+		        batallaActual.getActualNumberUnitsCivilization()[i] = sobrevivientes;
+		        if (contadoresUnidades[i] != null) {
+		            contadoresUnidades[i].setText(String.valueOf(sobrevivientes));
+		        }
 			}
-		});
-		pausa.setRepeats(false);
-		pausa.start();
+		
+		restaurarElementos();
+		
+		// Actualizar recursos
+		setCantidadMadera(String.valueOf(batallaActual.getWasteWoodIron()[0]));
+	    setCantidadHierro(String.valueOf(batallaActual.getWasteWoodIron()[1]));
+	    setCantidadComida(String.valueOf(batallaActual.getWasteFoodMana()[0]));
+	    setCantidadMana(String.valueOf(batallaActual.getWasteFoodMana()[1]));
+	    
+	    // Mostrar resultado
+	    String titulo = ganamos ? "¡Victoria!" : "Derrota";
+	    JOptionPane.showMessageDialog(this, mecanicas.getBattleReport(numBatalla), 
+	        titulo, ganamos ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
+	    
+	    repaint();
+		}
+	
+	public void restaurarElementos() {
+		String[] rutas = {
+		        "./src/gui/espada.png",       
+		        "./src/gui/lanza.png",        
+		        "./src/gui/ballesta.png",     
+		        "./src/gui/canon.png",        
+		        "./src/gui/torreflechas.png", 
+		        "./src/gui/catapulta.png",    
+		        "./src/gui/torrecohetes.png", 
+		        "./src/gui/mago.png",         
+		        "./src/gui/sacerdote.png",    
+		        "./src/gui/granja.png",       
+		        "./src/gui/carpinteria.png",  
+		        "./src/gui/herreria.png",     
+		        "./src/gui/torremagica.png",  
+		        "./src/gui/iglesia.png"       
+		    };
+		
+		int [][] positions = batallaActual.getPositions();
+		for (int i = 0; i < rutas.length; i++) {
+			int x = positions[i][0];
+			int y = positions[i][1];
+			
+			if (x > 0 && y > 0) {
+				elementosEnPantalla.add(new ElementoVisual(rutas[i], x, y, i));
+			}
+		}
+
 	}
 }
 
