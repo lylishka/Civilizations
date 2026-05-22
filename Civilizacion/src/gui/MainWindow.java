@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 
 import data.QueryBattle;
 import data.QueryGui;
+import game.Variables;
 import logic.Battle;
 
 public class MainWindow extends JFrame {
@@ -129,6 +130,12 @@ public class MainWindow extends JFrame {
 				
 				if (jugar) {
 					Battle battallaInciada = queryGui.getBatallaActual();
+					
+					if (modo.equals("NUEVA")) {
+						battallaInciada.setWasteWoodIron(new int[] {Variables.WOOD_BASE_CIVILIZATION_ARMY, Variables.IRON_BASE_CIVILIZATION_ARMY});
+						battallaInciada.setWasteFoodMana(new int[] {Variables.FOOD_BASE_CIVILIZATIONY_ARMY, 0});
+					}
+					
 					iniciarGame(name, battallaInciada);
 				}
 			}
