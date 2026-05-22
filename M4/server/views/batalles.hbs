@@ -1,0 +1,37 @@
+<div class="contenedor-centro">
+    <section class="text-centro">
+        <h2>Batalles Jugades</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>{{total.total}}</h3>
+                <p class="card-simple">Batalles totals</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Llista de Batalles</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Civilització</th>
+                        <th>Resultat</th>
+                        <th>Informe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each llistat}}
+                    <tr>
+                        <td>{{num_battle}}</td>
+                        <td>{{name}}</td>
+                        <td>{{winner}}</td>
+                        <td><a class="link-reporte" href="/informesbatalles?id={{num_battle}}">Veure Informe</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
