@@ -1,0 +1,7 @@
+*.jar
+node_modules/
+.vscode/
+.settings/
+.classpath
+.project
+*.sql
