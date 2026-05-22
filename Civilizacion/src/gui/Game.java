@@ -696,6 +696,7 @@ public class Game extends JPanel {
 				elementosEnPantalla.add(new ElementoVisual(rutas[i], x, y, i));
 			}
 		}
+		repaint();
 
 	}
 }
