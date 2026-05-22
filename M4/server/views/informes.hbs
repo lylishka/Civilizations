@@ -1,0 +1,33 @@
+<section class="text-centro max-width-650">
+
+    <h2>Battle Report #{{datos.num_battle}}</h2>
+    <p style="color: #333; font-weight: bold; margin-bottom: 30px;">Informe de la batalla de {{datos.name}}</p>
+
+    <div class="cards" style="margin-bottom: 40px;">
+        <div class="card">
+            <img class="img-recurso" src="img/menjar.png" class="img-recurso">
+            <h3 style="margin-bottom: 5px;">Menjar</h3>
+            <p>{{datos.food_amount}}</p>
+        </div>
+
+        <div class="card">
+            <img class="img-recurso" src="img/fusta.png">
+            <h3 style="margin-bottom: 5px;">Fusta</h3>
+            <p>{{datos.wood_acquired}}</p>
+        </div>
+
+        <div class="card">
+            <img class="img-recurso"  src="img/ferro.png">
+            <h3 style="margin-bottom: 5px;">Ferro</h3>
+            <p>{{datos.wood_acquired}}</p>
+        </div>
+
+        <div class="card">
+            <img class="img-recurso" src="img/mana.png">
+            <h3 style="margin-bottom: 5px;">Manà</h3>
+            <p>{{datos.mana_amount}}</p>
+        </div>
+
+        <p class="log-entry">{{datos.log_entry}}</p>
+    </div>
+</section>
