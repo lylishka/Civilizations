@@ -139,7 +139,7 @@ public class Game extends JPanel {
 		if (fondo != null) {
 			g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
 		}
-		
+		ArrayList<ElementoVisual> copia = new ArrayList<>(elementosEnPantalla);
 		for (ElementoVisual elem : elementosEnPantalla) {
 			elem.dibujar(g2d);
 		}
@@ -170,11 +170,11 @@ public class Game extends JPanel {
 		agregarRecurso(izquierdo, "lanza", 1, true, false, false);
 		agregarRecurso(izquierdo, "ballesta", 2, true, false, false);
 		agregarRecurso(izquierdo, "canon", 3, true, false, false);
-		agregarRecurso(izquierdo, "mago", 4, true, false, false);
-		agregarRecurso(izquierdo, "sacerdote", 5, true, false, false);
-		agregarRecurso(izquierdo, "torreflechas", 6, true, false, false);
-		agregarRecurso(izquierdo, "catapulta", 7, true, false, false);
-		agregarRecurso(izquierdo, "torrecohetes", 8, true, false, false);
+		agregarRecurso(izquierdo, "torreflechas", 4, true, false, false);
+		agregarRecurso(izquierdo, "catapulta", 5, true, false, false);
+		agregarRecurso(izquierdo, "torrecohetes", 6, true, false, false);
+		agregarRecurso(izquierdo, "mago", 7, true, false, false);
+		agregarRecurso(izquierdo, "sacerdote", 8, true, false, false);
 	
 		
 		JPanel derecho = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -613,8 +613,9 @@ public class Game extends JPanel {
 	}
 	public void ejecutarBatalla(int numBatalla) {
 		BattleMechanics mecanicas = (BattleMechanics) batallaActual;
-		
 		mecanicas.generarEnemigo(numBatalla);
+		
+		
 		
 		int espadachines = ((ArrayList) mecanicas.getArmies()[1].get(0)).size();
 	    int lanceros     = ((ArrayList) mecanicas.getArmies()[1].get(1)).size();
@@ -648,9 +649,6 @@ public class Game extends JPanel {
 		for (int i = 0; i < 9; i++) {
 			 int sobrevivientes = ((ArrayList) mecanicas.getArmies()[0].get(i)).size();
 		        batallaActual.getActualNumberUnitsCivilization()[i] = sobrevivientes;
-		        if (contadoresUnidades[i] != null) {
-		            contadoresUnidades[i].setText(String.valueOf(sobrevivientes));
-		        }
 			}
 		
 		restaurarElementos();

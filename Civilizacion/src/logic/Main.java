@@ -48,7 +48,7 @@ public class Main {
 						
 						if (segundosRestantes <= 0) {
 							window.getGame().ejecutarBatalla(numBatalla);
-							segundosPausa = 5;
+							segundosPausa = 3;
 						} else {
 							--segundosRestantes;
 						}
@@ -116,9 +116,9 @@ public class Main {
 		window.getGame().getBatallaActual().setWasteWoodIron(residuos);
 		window.getGame().getBatallaActual().setWasteFoodMana(elementos);
 		
-		game.setCantidadComida(String.valueOf(residuos[0]));
+		game.setCantidadMadera(String.valueOf(residuos[0]));
 		game.setCantidadHierro(String.valueOf(residuos[1]));
-		game.setCantidadMadera(String.valueOf(elementos[0]));
+		game.setCantidadComida(String.valueOf(elementos[0]));
 		game.setCantidadMana(String.valueOf(elementos[1]));
 		game.repaint();
 		

@@ -2,9 +2,14 @@ package logic;
 
 import java.util.ArrayList;
 
+import game.ArrowTower;
 import game.Cannon;
+import game.Catapult;
 import game.Crossbow;
+import game.Magician;
 import game.MilitaryUnit;
+import game.Priest;
+import game.RocketLauncherTower;
 import game.Spearman;
 import game.Swordsman;
 import game.Variables;
@@ -12,6 +17,45 @@ import game.Variables;
 public class BattleMechanics extends Battle {
 	public BattleMechanics(ArrayList<MilitaryUnit> civilizationArmy, ArrayList<MilitaryUnit> enemyArmy) {
 		super(civilizationArmy, enemyArmy);
+	}
+	
+	public void construirEjercito() {
+		// CORRECCIÓN: Usar el array de UNIDADES (tamaño 9) y no el de edificios
+		int[] cantidades = getActualNumberUnitsCivilization();
+		
+		// Inicializamos las 9 listas de nuestro ejército
+		for (int i = 0; i < 9; i++) {
+	        getArmies()[0].set(i, new ArrayList<MilitaryUnit>());
+	    }
+		
+		// Llenamos el ejército basándonos estrictamente en el array de unidades
+	    for (int i = 0; i < cantidades[0]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(0)).add(new Swordsman(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[1]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(1)).add(new Spearman(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[2]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(2)).add(new Crossbow(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[3]; i++) {
+	    	((ArrayList<MilitaryUnit>) getArmies()[0].get(3)).add(new Cannon(0, 0));
+	    }	
+	    for (int i = 0; i < cantidades[4]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(4)).add(new ArrowTower(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[5]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(5)).add(new Catapult(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[6]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(6)).add(new RocketLauncherTower(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[7]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(7)).add(new Magician(0, 0));
+	    }
+	    for (int i = 0; i < cantidades[8]; i++) {
+	        ((ArrayList<MilitaryUnit>) getArmies()[0].get(8)).add(new Priest(0, 0));
+	    }
 	}
 	
 	public void generarEnemigo(int numBatalla) {

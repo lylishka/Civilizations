@@ -103,6 +103,9 @@ public class QueryGui {
 				edificios[4] = rsCivilizacion.getInt("church_counter");
 				batallaActual.setActualNumberBuldingCivilization(edificios);
 				
+				int[]unidades = new int[9];
+				batallaActual.setActualNumberUnitsCivilization(unidades);
+				
 				int[][] pos = new int[14][2];
 				posiciones(idCivilization, pos, "building", "type");
 				posiciones(idCivilization, pos, "civilization_attack_stats", "type");
