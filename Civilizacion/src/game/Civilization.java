@@ -182,7 +182,7 @@ public class Civilization implements Variables{
 		farm += 1;;
 	}
 	
-	void newCarpentry () throws ResourceException {
+	public void newCarpentry () throws ResourceException {
 		if (food < FOOD_COST_CARPENTRY || wood < WOOD_COST_CARPENTRY || iron < IRON_COST_CARPENTRY) {
 			throw new ResourceException("No hay recursos suficientes para construir una carpinteria");
 		}
@@ -194,7 +194,7 @@ public class Civilization implements Variables{
 		carpentry += 1;
 	}
 	
-	void newSmithy () throws ResourceException {
+	public void newSmithy () throws ResourceException {
 		if (food < FOOD_COST_SMITHY || wood < WOOD_COST_SMITHY || iron < IRON_COST_SMITHY) {
             throw new ResourceException("No hay recursos suficientes para construir la Herrería.");
         }

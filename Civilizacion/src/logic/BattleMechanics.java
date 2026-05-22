@@ -2,13 +2,285 @@ package logic;
 
 import java.util.ArrayList;
 
+import game.Cannon;
+import game.Crossbow;
 import game.MilitaryUnit;
+import game.Spearman;
+import game.Swordsman;
 import game.Variables;
 
 public class BattleMechanics extends Battle {
 	public BattleMechanics(ArrayList<MilitaryUnit> civilizationArmy, ArrayList<MilitaryUnit> enemyArmy) {
 		super(civilizationArmy, enemyArmy);
 	}
+	
+	public void generarEnemigo(int numBatalla) {
+		// multiplicador de dificultad
+		int multiplicadorPorcentaje = 100 +(numBatalla * ENEMY_FLEET_INCREASE);
+		
+		int hierroDisponible = IRON_BASE_ENEMY_ARMY * multiplicadorPorcentaje / 100;
+		int maderaDisponible = WOOD_BASE_ENEMY_ARMY * multiplicadorPorcentaje / 100;
+		int comidaDisponible = FOOD_BASE_ENEMY_ARMY * multiplicadorPorcentaje / 100;
+		
+		// Limpiar ejercito anterior
+		for (int i = 0; i < 4; i++) {
+			getArmies()[1].set(i, new ArrayList<>());
+		}
+		
+		// Ver si hay recursos para las unidades
+		boolean sigueGenerando = true;
+		while (sigueGenerando == true) {
+			sigueGenerando = false;
+			
+			// añadir tropas enemigas
+			if (maderaDisponible >= WOOD_BASE_ENEMY_ARMY && hierroDisponible >= IRON_BASE_ENEMY_ARMY) {
+				((ArrayList<MilitaryUnit>) getArmies()[1].get(3)).add(new Cannon());
+				maderaDisponible -= WOOD_BASE_ENEMY_ARMY;
+				hierroDisponible -= IRON_BASE_ENEMY_ARMY;
+				sigueGenerando = true;
+			}
+			
+			if (maderaDisponible >= WOOD_COST_CROSSBOW && hierroDisponible >= IRON_COST_CROSSBOW) {
+				((ArrayList<MilitaryUnit>) getArmies()[1].get(2)).add(new Crossbow());
+				maderaDisponible = maderaDisponible - WOOD_COST_CROSSBOW;
+				hierroDisponible = hierroDisponible - IRON_COST_CROSSBOW;
+				sigueGenerando = true;
+			}
+			
+			if (comidaDisponible >= FOOD_COST_SPEARMAN && maderaDisponible >= WOOD_COST_SPEARMAN
+					&& hierroDisponible >= IRON_COST_SPEARMAN) {
+				((ArrayList<MilitaryUnit>) getArmies()[1].get(1)).add(new Spearman());
+				comidaDisponible = comidaDisponible - FOOD_COST_SPEARMAN;
+				maderaDisponible = maderaDisponible - WOOD_COST_SPEARMAN;
+				hierroDisponible = hierroDisponible - IRON_COST_SPEARMAN;
+				sigueGenerando = true;
+			}
+			
+			if (comidaDisponible >= FOOD_COST_SWORDSMAN && maderaDisponible >= WOOD_COST_SWORDSMAN
+					&& hierroDisponible >= IRON_COST_SWORDSMAN) {
+				((ArrayList<MilitaryUnit>) getArmies()[1].get(0)).add(new Swordsman());
+				comidaDisponible = comidaDisponible - FOOD_COST_SWORDSMAN;
+				maderaDisponible = maderaDisponible - WOOD_COST_SWORDSMAN;
+				hierroDisponible = hierroDisponible - IRON_COST_SWORDSMAN;
+				sigueGenerando = true;
+			}
+		}
+	}
+	
+	// Bucle principal de la batalla True si ganamos False si perdemos
+	public boolean executeBattle() {
+		initInitialArmies();
+		
+		int[] costeCivilizacion = fleetResourceCost(getCivilizationArmy());
+		int[] costeEnemigo		= fleetResourceCost(getEnemyArmy());
+		
+		getInitialCostFleet()[0][0] = costeCivilizacion[0];
+		getInitialCostFleet()[0][1] = costeCivilizacion[1];
+		getInitialCostFleet()[0][2] = costeCivilizacion[2];
+		getInitialCostFleet()[1][0] = costeEnemigo[0];
+		getInitialCostFleet()[1][1] = costeEnemigo[1];
+		getInitialCostFleet()[1][2] = costeEnemigo[2];
+		
+		setInitialNumberUnitsCivilization(totalUnidadesCivilizacion());
+		setInitialNumberUnitsEnemy(totalUnidadesEnemigo());
+		
+		boolean turnoEsCivilizacion = (Math.random() < 0.5 );
+		
+		while (quedanSuficientesUnidades()) {
+			setBattleDevelopment(getBattleDevelopment());
+			
+			if (turnoEsCivilizacion) {
+				turnoCivilizacion();
+			} else {
+				turnoEnemigo();
+			}
+			turnoEsCivilizacion = !turnoEsCivilizacion;
+		}
+		
+		// calcular las perdidas
+		calcularPerdidas();
+		
+		boolean civilizacionGana = getResourcesLooses()[0][3] <= getResourcesLooses()[1][3];
+		
+		if (!civilizacionGana) {
+			getWasteWoodIron()[0] = 0;
+			getWasteWoodIron()[1] = 0;
+		}
+		
+		setBattleDevelopment(getBattleDevelopment());
+		
+		return civilizacionGana;
+	}
+	
+	// Turno civilizacion
+	private void turnoCivilizacion() {
+		boolean puedeRepetir = true;
+		
+		while (puedeRepetir && quedanSuficientesUnidades()) {
+			int grupoAtacante = getCivilizationGroupAttacker();
+			if (grupoAtacante == -1) break;
+			
+			ArrayList<MilitaryUnit> grupoAtacanteList =
+					(ArrayList<MilitaryUnit>) getArmies()[0].get(grupoAtacante);
+			if (grupoAtacanteList.isEmpty()) {
+				break;			
+			}
+			
+			int idxAtacante = (int)(Math.random() * grupoAtacanteList.size());
+			MilitaryUnit atacante = grupoAtacanteList.get(idxAtacante);
+			
+			int grupoDefensor = getGroupDefender(4, false);
+			if (grupoDefensor == -1) {
+				break;
+			}
+			
+			ArrayList<MilitaryUnit> grupoDefensorList =
+					(ArrayList<MilitaryUnit>) getArmies()[1].get(grupoDefensor);
+			if (grupoDefensorList.isEmpty()) {
+				break;
+			}
+			
+			int idxDefensor = (int)(Math.random() * grupoDefensorList.size());
+			MilitaryUnit defensor = grupoDefensorList.get(idxDefensor);
+			
+			int daño = atacante.attack();
+			defensor.takeDamage(daño);
+			
+			String nombreAtacante = getNombreUnidad(grupoAtacante, true);
+			String nombreDefensor = getNombreUnidad(grupoDefensor, false);
+			
+			setBattleDevelopment(getBattleDevelopment()
+					+ "Attacks Civilization: " + nombreAtacante + " attacks " + nombreDefensor + "\n"
+					+ nombreAtacante + " generates the damage = " + daño + "\n"
+					+ nombreDefensor + " stays with armor = " + defensor.getActualArmor() + "\n");
+
+			if (defensor.getActualArmor() <= 0) {
+				setBattleDevelopment(getBattleDevelopment() + "we eliminate " + nombreDefensor + "\n");
+				
+				int chanceResiduo = (int)(Math.random() * 100) + 1;
+				if (chanceResiduo <= defensor.getChanceGeneratinWaste()) {
+					getWasteWoodIron()[0] = getWasteWoodIron()[0] + (defensor.getWoodCost() * PERCENTATGE_WASTE / 100);
+					getWasteWoodIron()[1] = getWasteWoodIron()[1] + (defensor.getIronCost() * PERCENTATGE_WASTE / 100);
+				}
+				int[] costeUnidad = {defensor.getFoodCost(), defensor.getWoodCost(), defensor.getIronCost()};
+				updateResourcesLooses(costeUnidad, false);
+				
+				grupoDefensorList.remove(idxDefensor);
+				getActualNumberUnitsEnemy()[grupoDefensor] = getActualNumberUnitsEnemy()[grupoDefensor] -1;
+				setEnemyDrops(getEnemyDrops() + 1);
+			}
+			
+			int chanceRepetir = (int)(Math.random() * 100) + 1;
+			puedeRepetir = (chanceRepetir <= atacante.getChanceAttackAgain());
+		}
+	}
+	
+	// Turno enemigo
+	private void turnoEnemigo() {
+		boolean puedeRepetir = true;
+		
+		while (puedeRepetir && quedanSuficientesUnidades()) {
+			int grupoAtacante = getEnemyGroupAttacker();
+			if (grupoAtacante == -1) break;
+			
+			ArrayList<MilitaryUnit> grupoAtacanteList =
+					(ArrayList<MilitaryUnit>) getArmies()[1].get(grupoAtacante);
+			if (grupoAtacanteList.isEmpty()) {
+				break;			
+			}
+			
+			int idxAtacante = (int)(Math.random() * grupoAtacanteList.size());
+			MilitaryUnit atacante = grupoAtacanteList.get(idxAtacante);
+			
+			int grupoDefensor = getGroupDefender(9, true);
+			if (grupoDefensor == -1) {
+				break;
+			}
+			
+			ArrayList<MilitaryUnit> grupoDefensorList =
+					(ArrayList<MilitaryUnit>) getArmies()[0].get(grupoDefensor);
+			if (grupoDefensorList.isEmpty()) {
+				break;
+			}
+			
+			int idxDefensor = (int)(Math.random() * grupoDefensorList.size());
+			MilitaryUnit defensor = grupoDefensorList.get(idxDefensor);
+			
+			int daño = atacante.attack();
+			defensor.takeDamage(daño);
+			
+			String nombreAtacante = getNombreUnidad(grupoAtacante, false);
+			String nombreDefensor = getNombreUnidad(grupoDefensor, true);
+			
+			setBattleDevelopment(getBattleDevelopment()
+					+ "Attacks Civilization: " + nombreAtacante + " attacks " + nombreDefensor + "\n"
+					+ nombreAtacante + " generates the damage = " + daño + "\n"
+					+ nombreDefensor + " stays with armor = " + defensor.getActualArmor() + "\n");
+
+			if (defensor.getActualArmor() <= 0) {
+				setBattleDevelopment(getBattleDevelopment() + "we eliminate " + nombreDefensor + "\n");
+				
+				int chanceResiduo = (int)(Math.random() * 100) + 1;
+				if (chanceResiduo <= defensor.getChanceGeneratinWaste()) {
+					getWasteWoodIron()[0] = getWasteWoodIron()[0] + (defensor.getWoodCost() * PERCENTATGE_WASTE / 100);
+					getWasteWoodIron()[1] = getWasteWoodIron()[1] + (defensor.getIronCost() * PERCENTATGE_WASTE / 100);
+				}
+				int[] costeUnidad = {defensor.getFoodCost(), defensor.getWoodCost(), defensor.getIronCost()};
+				updateResourcesLooses(costeUnidad, false);
+				
+				grupoDefensorList.remove(idxDefensor);
+				getActualNumberUnitsEnemy()[grupoDefensor] = getActualNumberUnitsEnemy()[grupoDefensor] -1;
+				setEnemyDrops(getEnemyDrops() + 1);
+			}
+			
+			int chanceRepetir = (int)(Math.random() * 100) + 1;
+			puedeRepetir = (chanceRepetir <= atacante.getChanceAttackAgain());
+		}
+	}
+	
+	// Auxiliares 
+	
+	private boolean quedanSuficientesUnidades() {
+		int totalCiv     = totalUnidadesCivilizacion();
+		int totalEnemigo = totalUnidadesEnemigo();
+		int umbralCiv     = getInitialNumberUnitsCivilization() * 20 / 100;
+		int umbralEnemigo = getInitialNumberUnitsEnemy() * 20 / 100;
+		return totalCiv > umbralCiv && totalEnemigo > umbralEnemigo;
+	}
+	private int totalUnidadesCivilizacion() {
+		int total = 0;
+		for (int i = 0; i < 9; i++) {
+			total = total + ((ArrayList<MilitaryUnit>) getArmies()[0].get(i)).size();
+		}
+		return total;
+	}
+	private int totalUnidadesEnemigo() {
+		int total = 0;
+		for (int i = 0; i < 4; i++) {
+			total = total + ((ArrayList<MilitaryUnit>) getArmies()[1].get(i)).size();
+		}
+		return total;
+	}
+	private void calcularPerdidas() {
+		getResourcesLooses()[0][3] = getResourcesLooses()[0][2]
+				+ getResourcesLooses()[0][1] / 5
+				+ getResourcesLooses()[0][0] / 10;
+		getResourcesLooses()[1][3] = getResourcesLooses()[1][2]
+				+ getResourcesLooses()[1][1] / 5
+				+ getResourcesLooses()[1][0] / 10;
+	}
+	private String getNombreUnidad(int indice, boolean esCivilizacion) {
+		if (esCivilizacion) {
+			String[] nombres = {"Swordsman", "Spearman", "Crossbow", "Cannon",
+					"Arrow Tower", "Catapult", "Rocket Launcher Tower", "Magician", "Priest"};
+			if (indice >= 0 && indice < nombres.length) return nombres[indice];
+		} else {
+			String[] nombres = {"Swordsman", "Spearman", "Crossbow", "Cannon"};
+			if (indice >= 0 && indice < nombres.length) return nombres[indice];
+		}
+		return "Unknown";
+	}
+	
 	// unidades inicialesde cada vando
 	public void initInitialArmies() {
 		for (int i = 0; i < 9; i++) {
