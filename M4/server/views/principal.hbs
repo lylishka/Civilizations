@@ -1,0 +1,89 @@
+<section class="hero">
+    <h2>Projecte Civilizations</h2>
+
+    <div class="card-portada">
+        <img src="img/Portada_Civilizations.png" alt="Portada Civilizations">
+    </div>
+
+    <p>Estarem al comandament d'una petita civilització! Disposarem de
+        recursos, tecnologies, edificis, defenses i unitats tant d'atac com de defensa.
+        Malauradament, no podrem viure tranquils, atès que hi ha altres civilitzacions que volen
+        conquerir-nos i que ens atacaran constantment. Això ens obligarà a cuidar les defenses de
+        la nostra civilització per defensar-nos dels atacs continus.</p>
+
+</section>
+
+<section>
+    <h2>Elements de la nostra civilització</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Recursos</h3>
+            <p>Gestiona Menjar, Fusta, Ferro i Manà. La nostra civilització generarà una certa
+                quantitat de recursos cada cert temps, excepte mannà, que només es generarà en
+                funció de les torres màgiques que tinguem.</p>
+        </div>
+
+        <div class="card">
+            <h3>Edificis</h3>
+            <p>Edificis que ens permetran generar un extra de recursos: Granges, Fusteries,
+                Ferreries, Torres màgiques i Esglésies.</p>
+        </div>
+
+        <div class="card">
+            <h3>Tecnologies</h3>
+            <p>Les tecnologies serviran per crear millors unitats i així tenir un avantatge
+                sobre l'exèrcit enemic.</p>
+        </div>
+
+
+        <div class="card">
+            <h3>Unitats</h3>
+            <p>Ofensives (Espadachin, Llancer, Ballesta i Canó), Defensives (Torre llança,
+                Catapulta i Torre llançacoets) i Especials (Mag i Sacerdot)</p>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h2>Captures de Pantalla</h2>
+
+    <div class="cards">
+        <div class="card">
+            <img src="img/Screenshot1.png" alt="screenshot">
+        </div>
+
+
+        <div class="card">
+            <img src="img/Screenshot2.png" alt="screenshot">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Últimes 2 Batalles</h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Civilització</th>
+                    <th>Resultat</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each ultimesBatalles}}
+                <tr>
+                    <td>{{num_battle}}</td>
+                    <td>{{name}}</td>
+                    <td>{{winner}}</td>
+                    <td>{{fecha}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>
