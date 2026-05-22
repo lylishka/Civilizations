@@ -28,6 +28,7 @@ import javax.swing.JTabbedPane;
 import game.Civilization;
 import game.Variables;
 import logic.Battle;
+import logic.BattleMechanics;
 import logic.BuildingException;
 import logic.ResourceException;
 
@@ -609,6 +610,49 @@ public class Game extends JPanel {
 		
 		conten.add(info);
 	}
+	public void ejecutarBatalla(int numBatalla) {
+		BattleMechanics mecanicas = (BattleMechanics) batallaActual;
+		
+		mecanicas.generarEnemigo(numBatalla);
+		
+		int[] enemios = mecanicas.getActualNumberUnitsEnemy();
+		for (int i = 0; i < enemios[0]; i++) {
+			añadirElementos("./src/gui/espada.png");
+		}
+		for (int i = 0; i < enemios[1]; i++) {
+			añadirElementos("./src/gui/lanza.png");
+		}
+		for (int i = 0; i < enemios[2]; i++) {
+			añadirElementos("./src/gui/ballesta.png");
+		}
+		for (int i = 0; i < enemios[3]; i++) {
+			añadirElementos("./src/gui/canon.png");
+		}
+		
+		repaint();
+		
+		// Pausa para poder ver a los enemigos
+		javax.swing.Timer pausa = new javax.swing.Timer(3000, new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				mecanicas.executeBattle();
+				
+				setCantidadMadera(String.valueOf(batallaActual.getWasteWoodIron()[0]));
+				setCantidadMadera(String.valueOf(batallaActual.getWasteWoodIron()[1]));
+				setCantidadComida(String.valueOf(batallaActual.getWasteFoodMana()[0]));
+				setCantidadMana(String.valueOf(batallaActual.getWasteFoodMana()[1]));
+				
+				String reporte = mecanicas.getBattleReport(numBatalla);
+				JOptionPane.showMessageDialog(Game.this, reporte, "Resultado de la Batalla", JOptionPane.INFORMATION_MESSAGE);
+				
+				repaint();
+				
+			}
+		});
+		pausa.setRepeats(false);
+		pausa.start();
+	}
 }
 
 class ElementoVisual {
@@ -637,4 +681,6 @@ class ElementoVisual {
 			g2d.drawImage(imagen, x, y, 45, 45, null);
 		}
 	}
+	
+
 }

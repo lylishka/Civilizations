@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import game.MilitaryUnit;
 import logic.Battle;
+import logic.BattleMechanics;
 
 public class QueryGui {
 	private Connection conn;
@@ -57,7 +58,7 @@ public class QueryGui {
 					idCivilizacion = rsId.getInt("civilization_id");
 				}
 				
-				this.batallaActual = new Battle(new ArrayList<MilitaryUnit>(), new ArrayList<MilitaryUnit>());
+				this.batallaActual = new BattleMechanics(new ArrayList<MilitaryUnit>(), new ArrayList<MilitaryUnit>());
 				QueryBattle queryBattle = new QueryBattle();
 				queryBattle.saveBattleStats(batallaActual, idCivilizacion);
 				
@@ -87,7 +88,7 @@ public class QueryGui {
 			if (rsCivilizacion.next()) {
 				int idCivilization = rsCivilizacion.getInt("civilization_id");
 				
-				batallaActual = new Battle(new ArrayList<MilitaryUnit>(), new ArrayList<MilitaryUnit>());
+				batallaActual = new BattleMechanics(new ArrayList<MilitaryUnit>(), new ArrayList<MilitaryUnit>());
 				
 				batallaActual.getWasteWoodIron()[0] = rsCivilizacion.getInt("wood_amount");
 				batallaActual.getWasteWoodIron()[1] = rsCivilizacion.getInt("iron_amount");

@@ -27,11 +27,12 @@ public class Main {
 				public void run() {
 					if (window.isJugando()) {
 						if (window.getGame().isSiguienteBatalla()) {
-							segundosRestantes = 1;
+							segundosRestantes = 0;
 							window.getGame().setSiguienteBatalla(false);
 						} 
 						
 						if (segundosRestantes <= 0) {
+							window.getGame().ejecutarBatalla(1);
 							segundosRestantes = 180;
 						} else {
 							--segundosRestantes;
