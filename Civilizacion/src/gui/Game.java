@@ -688,7 +688,7 @@ public class Game extends JPanel {
 		    };
 		
 		int [][] positions = batallaActual.getPositions();
-		for (int i = 0; i < rutas.length; i++) {
+		for (int i = 0; i < positions.length; i++) {
 			int x = positions[i][0];
 			int y = positions[i][1];
 			
