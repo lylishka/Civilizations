@@ -6,6 +6,11 @@ public interface Variables {
 	public final int WOOD_BASE_ENEMY_ARMY = 180000;
 	public final int FOOD_BASE_ENEMY_ARMY = 70000;
 	
+	// resources available to create the first civilization fleet
+	public final int IRON_BASE_CIVILIZATION_ARMY = 4000;
+	public final int WOOD_BASE_CIVILIZATION_ARMY = 6000;
+	public final int FOOD_BASE_CIVILIZATIONY_ARMY = 3000;
+	
 	// percentage increase of resources available to create enemy fleet
 	public final int ENEMY_FLEET_INCREASE = 6;
 	
